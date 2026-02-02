@@ -26,7 +26,7 @@ export default function HomePage() {
   const featuredEvents = [
     {
       id: 1,
-      title: 'Forcalympic 2025',
+      title: 'Ceritanya Lomba 2025',
       description: 'Olimpiade game dan olahraga kampus terbesar tahun ini',
       category: 'Multi-event',
       participants: 250,
@@ -106,7 +106,7 @@ export default function HomePage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 ">
+    <div className="mt-20 min-h-screen bg-gradient-to-br from-gray-900 ">
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
@@ -133,7 +133,7 @@ export default function HomePage() {
             </h1>
             
             <p className="text-xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
-              Platform terpadu untuk mengelola pendaftaran, kompetisi, dan bracket
+              Platform terpadu untuk mengelola pendaftaran acara, kompetisi, dan bracket
               berbagai lomba.
             </p>
 
@@ -322,7 +322,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4">
+      <section className="py-10 px-4">
         <div className="container mx-auto">
           <div className="relative overflow-hidden rounded-3xl">
             {/* Background Gradient */}
@@ -367,22 +367,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Footer CTA */}
-      <footer className="py-10 px-4 border-t border-white/10">
-        <div className="container mx-auto text-center">
-          <p className="text-gray-400 mb-6">
-            Eventra - Platform Manajemen Event & Kompetisi Kampus
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
-            <Link href="/about" className="hover:text-white transition-colors">Tentang</Link>
-            <Link href="/contact" className="hover:text-white transition-colors">Kontak</Link>
-            <Link href="/privacy" className="hover:text-white transition-colors">Privasi</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Syarat</Link>
-            <Link href="/help" className="hover:text-white transition-colors">Bantuan</Link>
-          </div>
-        </div>
-      </footer>
 
       <style jsx global>{`
         @keyframes blob {

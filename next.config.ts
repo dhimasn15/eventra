@@ -1,4 +1,3 @@
-// next.config.ts
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -7,9 +6,6 @@ const nextConfig: NextConfig = {
   
   compiler: {
     styledJsx: false, 
-  }, 
-  experimental: {
-    forceSwcTransforms: true,
   }
 };
 

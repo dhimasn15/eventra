@@ -109,86 +109,20 @@ export default function RegisterPage() {
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-900 to-purple-900/20">
 
       {/* Back to Home */}
-      <Link
-        href="/"
-        className="absolute top-6 left-6 z-10 group"
-      >
-        <div className="flex items-center gap-2 px-4 py-2 rounded-xl backdrop-blur-sm bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-300">
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          <span className="text-sm">Kembali</span>
+      <div className="w-full max-w-md z-10 mb-8">
+        <div className="flex items-center justify-between">
+          <Link
+            href="/"
+            className="group flex items-center gap-2 px-4 py-2 rounded-xl backdrop-blur-sm bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-300"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <span className="text-sm">Kembali</span>
+          </Link>
         </div>
-      </Link>
+      </div>
 
-      <div className="w-full max-w-6xl z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Brand & Features */}
-          <div className="hidden lg:block">
-            <div className="max-w-lg">
-              <Link href="/" className="inline-flex items-center gap-3 mb-8 group">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
-                  <Sparkles className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                    Eventra
-                  </h2>
-                  <p className="text-sm text-gray-400">Event Management & Competition System</p>
-                </div>
-              </Link>
-
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                Bergabung dengan{' '}
-                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
-                  Komunitas Eventra
-                </span>
-              </h1>
-              
-              <p className="text-gray-300 text-lg mb-10 leading-relaxed">
-                Daftar sekarang untuk mulai berpartisipasi dalam berbagai event dan kompetisi
-                menarik di kampus Anda. Bergabunglah dengan ribuan peserta lainnya!
-              </p>
-
-              {/* Features Grid */}
-              <div className="grid grid-cols-2 gap-5 mb-12">
-                {features.map((feature, index) => (
-                  <div
-                    key={index}
-                    className="group relative overflow-hidden rounded-xl transition-all duration-300"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="relative backdrop-blur-sm bg-white/5 border border-white/10 rounded-xl p-5 hover:border-white/20 transition-all duration-300">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center mb-3 border border-white/10">
-                        <div className="text-purple-300">
-                          {feature.icon}
-                        </div>
-                      </div>
-                      <h3 className="text-white font-semibold mb-1">{feature.title}</h3>
-                      <p className="text-gray-400 text-sm">{feature.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Stats */}
-              <div className="flex items-center gap-8">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-white mb-1">50+</div>
-                  <div className="text-sm text-gray-400">Event Aktif</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-white mb-1">5,000+</div>
-                  <div className="text-sm text-gray-400">Peserta</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-white mb-1">98%</div>
-                  <div className="text-sm text-gray-400">Kepuasan</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column - Register Form */}
-          <div className="flex mt-17 justify-center lg:justify-end">
+      <div className="w-full max-w-md z-10 m-2">
+        <div className="grid gap-12 items-center">
             <div className="w-full max-w-2xl">
               {/* Glass Form Container */}
               <div className="relative group">
@@ -199,11 +133,6 @@ export default function RegisterPage() {
                 <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-8 shadow-2xl">
                   {/* Form Header */}
                   <div className="text-center mb-8">
-                    <div className="flex justify-center mb-4">
-                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center border border-white/20">
-                        <UserPlus className="w-8 h-8 text-white" />
-                      </div>
-                    </div>
                     <h2 className="text-3xl font-bold text-white mb-2">Daftar Eventra</h2>
                     <p className="text-gray-400">
                       Buat akun untuk mulai berpartisipasi dalam event
@@ -400,49 +329,6 @@ export default function RegisterPage() {
                       </div>
                     </div>
 
-                    {/* Role Selection */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-3">
-                        Daftar sebagai:
-                      </label>
-                      <div className="grid grid-cols-2 gap-4">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelectedRole('participant')
-                            setValue('role', 'participant')
-                          }}
-                          className={`p-4 rounded-xl transition-all duration-300 flex flex-col items-center justify-center ${
-                            selectedRole === 'participant'
-                              ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/50 text-white'
-                              : 'backdrop-blur-sm bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10 hover:text-white'
-                          }`}
-                        >
-                          <User className="w-6 h-6 mb-2" />
-                          <p className="font-medium">Peserta Individu</p>
-                          <p className="text-sm mt-1 text-gray-400">Untuk lomba individu</p>
-                        </button>
-                        
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelectedRole('team_leader')
-                            setValue('role', 'team_leader')
-                          }}
-                          className={`p-4 rounded-xl transition-all duration-300 flex flex-col items-center justify-center ${
-                            selectedRole === 'team_leader'
-                              ? 'bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/50 text-white'
-                              : 'backdrop-blur-sm bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10 hover:text-white'
-                          }`}
-                        >
-                          <Users className="w-6 h-6 mb-2" />
-                          <p className="font-medium">Ketua Tim</p>
-                          <p className="text-sm mt-1 text-gray-400">Untuk lomba tim</p>
-                        </button>
-                      </div>
-                      <input type="hidden" {...register('role')} />
-                    </div>
-
                     {/* Terms Agreement */}
                     <div className="flex items-start">
                       <label className="flex items-start cursor-pointer">
@@ -514,7 +400,7 @@ export default function RegisterPage() {
                 </div>
               </div>
             </div>
-          </div>
+          
         </div>
       </div>
 

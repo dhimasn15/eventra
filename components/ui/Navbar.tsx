@@ -4,7 +4,6 @@ import { useState } from "react"
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { 
-  Trophy, 
   Menu, 
   X, 
   User,
@@ -18,7 +17,8 @@ import {
   Settings,
   ChevronDown,
   DollarSign,
-  TrendingUp
+  TrendingUp,
+  Trophy
 } from 'lucide-react'
 
 const Navbar = () => {
@@ -26,7 +26,6 @@ const Navbar = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
   const pathname = usePathname()
 
-  // Mock user data
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userRole, setUserRole] = useState<'admin' | 'participant'>('participant')
 
@@ -60,7 +59,7 @@ const Navbar = () => {
   const getNavLinkClass = (href: string) => {
     const isActive = pathname === href
     return `flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
-      isActive 
+      isActive    
         ? 'text-white bg-white/20 backdrop-blur-sm' 
         : 'text-gray-300 hover:text-white hover:bg-white/10'
     }`
@@ -68,7 +67,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Navbar Transparan dengan Liquid Glass */}
       <nav className="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
         <div className="container mx-auto">
           <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-xl">
@@ -80,9 +78,6 @@ const Navbar = () => {
                   className="flex items-center gap-3 group"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm border border-white/10 flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-purple-500/30 group-hover:to-pink-500/30 transition-all">
-                    <Trophy className="w-6 h-6 text-white" />
-                  </div>
                   <div className="flex flex-col">
                     <span className="text-xl font-bold text-white">Eventra</span>
                     <span className="text-xs text-gray-400 hidden md:block">Event Management</span>
@@ -103,9 +98,7 @@ const Navbar = () => {
                   ))}
                 </div>
 
-                {/* Right Side - Auth/User Menu */}
                 <div className="hidden lg:flex items-center gap-2">
-                  {/* Notifications */}
                   <button className="p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all">
                     <Bell className="w-5 h-5" />
                   </button>
@@ -217,7 +210,7 @@ const Navbar = () => {
                 <div className="flex justify-between items-center mb-6">
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-white/10 flex items-center justify-center">
-                      <Trophy className="w-5 h-5 text-white" />
+                      <img src="/eventra-logo.png" alt="Eventra" className="w-5 h-5" />
                     </div>
                     <span className="text-lg font-bold text-white">Eventra</span>
                   </div>

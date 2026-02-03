@@ -10,7 +10,6 @@ import {
   Phone,
   Heart,
   Sparkles,
-  Facebook,
   MessageCircle,
   Calendar,
   Users,
@@ -74,12 +73,6 @@ export default function Footer() {
       href: 'https://instagram.com/eventra', 
       label: 'Instagram',
       color: 'hover:text-pink-400'
-    },
-    { 
-      icon: <Facebook className="w-5 h-5" />, 
-      href: 'https://facebook.com/eventra', 
-      label: 'Facebook',
-      color: 'hover:text-blue-600'
     },
     { 
       icon: <Youtube className="w-5 h-5" />, 

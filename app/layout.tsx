@@ -1,12 +1,11 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Providers } from './providers'
+import Navbar from '@/components/ui/Navbar'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
-
 export const metadata: Metadata = {
-  title: 'Eventra - Event Management & Competition System',
-  description: 'Platform untuk mengelola event dan lomba kampus',
+  title: 'Eventra - Event Management Platform',
+  description: 'Platform untuk mengelola event, kompetisi, dan turnamen',
 }
 
 export default function RootLayout({
@@ -15,9 +14,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className}`} suppressHydrationWarning> 
-        {children}
+    <html lang="id" suppressHydrationWarning>
+      <body className="bg-gray-900">
+        <Providers>
+          <div className="pt-5">
+            {children}
+          </div>
+        </Providers>
       </body>
     </html>
   )

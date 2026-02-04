@@ -1,22 +1,24 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { signIn } from 'next-auth/react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { 
-  LogIn, 
   Mail, 
   Lock, 
   Eye, 
   EyeOff, 
-  Sparkles, 
   ChevronRight,
   User,
   Users,
   ArrowLeft,
-  Home
+  CheckCircle,
+  AlertCircle,
+  X
 } from 'lucide-react'
 
 const loginSchema = z.object({
@@ -30,6 +32,18 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [selectedRole, setSelectedRole] = useState<'participant' | 'admin'>('participant')
   const [isLoading, setIsLoading] = useState(false)
+  const [loginError, setLoginError] = useState<string | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    if (searchParams.get('success') === 'registered') {
+      setSuccessMessage('Registrasi berhasil! Silakan login dengan akun Anda.')
+      const timer = setTimeout(() => setSuccessMessage(null), 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [searchParams])
 
   const {
     register,
@@ -41,9 +55,33 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginForm) => {
     setIsLoading(true)
-    console.log('Login data:', data, 'Role:', selectedRole)
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    setIsLoading(false)
+    setLoginError(null)
+
+    try {
+      const result = await signIn('credentials', {
+        email: data.email.toLowerCase(),
+        password: data.password,
+        redirect: false,
+      })
+
+      if (result?.error) {
+        if (result.error === 'CredentialsSignin') {
+          setLoginError('Email atau password salah')
+        } else {
+          setLoginError(result.error || 'Login gagal')
+        }
+      } else if (result?.ok) {
+        setSuccessMessage('Login berhasil! Redirecting...')
+        setTimeout(() => {
+          router.replace('/')
+        }, 800)
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+      setLoginError('Terjadi kesalahan saat login')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleGoogleLogin = () => {
@@ -52,6 +90,16 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-900 to-purple-900/20">
+
+      {/* Toast Notifications */}
+      {successMessage && (
+        <div className="fixed top-4 left-4 right-4 max-w-md mx-auto z-[999] animate-slide-down">
+          <div className="backdrop-blur-xl bg-green-500/20 border border-green-500/50 rounded-xl p-4 flex items-center gap-3 shadow-xl">
+            <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+            <span className="text-sm text-green-200">{successMessage}</span>
+          </div>
+        </div>
+      )}
 
       {/* Navigation */}
       <div className="w-full max-w-md z-10 mb-8">
@@ -81,6 +129,12 @@ export default function LoginPage() {
               <p className="text-gray-400">
                 Masuk untuk mulai berpartisipasi atau mengelola event
               </p>
+              {loginError && (
+                <div className="mt-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-200 text-sm flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  {loginError}
+                </div>
+              )}
             </div>
 
             {/* Google Login Button */}
@@ -150,6 +204,7 @@ export default function LoginPage() {
                     <input
                       {...register('email')}
                       type="email"
+                      autoComplete="username"
                       placeholder="email@example.com"
                       className="w-full pl-10 pr-4 py-3 text-sm backdrop-blur-sm bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-all"
                     />
@@ -183,6 +238,7 @@ export default function LoginPage() {
                       {...register('password')}
                       type={showPassword ? 'text' : 'password'}
                       placeholder="••••••••"
+                      autoComplete="current-password"
                       className="w-full pl-10 pr-12 py-3 text-sm backdrop-blur-sm bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-all"
                     />
                     <button
@@ -207,30 +263,13 @@ export default function LoginPage() {
               </div>
 
               <div className="flex items-center">
-                <label className="flex items-center cursor-pointer">
-                  <div className="relative">
-                    <input
-                      type="checkbox"
-                      className="sr-only"
-                      defaultChecked
-                    />
-                    <div className="w-5 h-5 backdrop-blur-sm bg-white/5 border border-white/20 rounded flex items-center justify-center">
-                      <svg
-                        className="w-3 h-3 text-purple-400 opacity-0"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                  <span className="ml-2 text-sm text-gray-400">Ingat saya</span>
+                <label className="flex items-center cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    className="w-5 h-5 rounded accent-purple-500 cursor-pointer"
+                    defaultChecked
+                  />
+                  <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-300">Ingat saya</span>
                 </label>
               </div>
 
@@ -282,29 +321,6 @@ export default function LoginPage() {
 
       {/* Animation styles */}
       <style jsx global>{`
-        @keyframes blob {
-          0% {
-            transform: translate(0px, 0px) scale(1);
-          }
-          33% {
-            transform: translate(30px, -50px) scale(1.1);
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-          }
-          100% {
-            transform: translate(0px, 0px) scale(1);
-          }
-        }
-        
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        
         @keyframes spin {
           from {
             transform: rotate(0deg);
@@ -316,6 +332,21 @@ export default function LoginPage() {
         
         .animate-spin {
           animation: spin 1s linear infinite;
+        }
+
+        @keyframes slide-down {
+          from {
+            transform: translateY(-20px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+
+        .animate-slide-down {
+          animation: slide-down 0.3s ease-out;
         }
       `}</style>
     </div>

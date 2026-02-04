@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useSession, signOut } from 'next-auth/react'
 import { 
   Menu, 
   X, 
@@ -25,9 +26,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
   const pathname = usePathname()
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [userRole, setUserRole] = useState<'admin' | 'participant'>('participant')
+  const { data: session } = useSession()
 
   const navLinks = [
     { name: 'Home', href: '/', icon: <Home className="w-5 h-5" /> },
@@ -51,8 +50,8 @@ const Navbar = () => {
     { name: 'Manage Users', href: '/admin/users', icon: <Users className="w-4 h-4" /> },
   ]
 
-  const handleLogout = () => {
-    setIsLoggedIn(false)
+  const handleLogout = async () => {
+    await signOut({ redirect: true, callbackUrl: '/' })
     setIsUserMenuOpen(false)
   }
 
@@ -64,6 +63,8 @@ const Navbar = () => {
         : 'text-gray-300 hover:text-white hover:bg-white/10'
     }`
   }
+
+  const isAdmin = session?.user?.role === 'admin'
 
   return (
     <>
@@ -104,7 +105,7 @@ const Navbar = () => {
                   </button>
 
                   {/* Auth/User Section */}
-                  {isLoggedIn ? (
+                  {session ? (
                     <div className="relative">
                       <button
                         onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
@@ -114,8 +115,8 @@ const Navbar = () => {
                           <User className="w-4 h-4 text-white" />
                         </div>
                         <div className="text-left">
-                          <p className="text-sm font-semibold text-white">John Doe</p>
-                          <p className="text-xs text-gray-300 capitalize">{userRole}</p>
+                          <p className="text-sm font-semibold text-white">{session.user?.name}</p>
+                          <p className="text-xs text-gray-300 capitalize">{session.user?.role}</p>
                         </div>
                         <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
                       </button>
@@ -130,11 +131,11 @@ const Navbar = () => {
                           <div className="absolute right-0 mt-2 w-56 backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl overflow-hidden z-50 animate-slide-up shadow-xl">
                             <div className="p-3 border-b border-white/10">
                               <p className="text-xs text-gray-400">Signed in as</p>
-                              <p className="text-sm font-semibold text-white">john@example.com</p>
+                              <p className="text-sm font-semibold text-white">{session.user?.email}</p>
                             </div>
                             
                             <div className="p-1">
-                              {(userRole === 'admin' ? adminMenuItems : userMenuItems).map((item) => (
+                              {(isAdmin ? adminMenuItems : userMenuItems).map((item) => (
                                 <Link
                                   key={item.name}
                                   href={item.href}
@@ -223,21 +224,25 @@ const Navbar = () => {
                 </div>
 
                 {/* User Info Section */}
-                {isLoggedIn ? (
+                {session ? (
                   <div className="mb-6 p-3 rounded-xl bg-white/10 border border-white/10">
                     <div className="flex items-center gap-3 mb-3">
                       <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
                         <User className="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <p className="font-semibold text-white text-sm">John Doe</p>
-                        <p className="text-xs text-gray-300 capitalize">{userRole}</p>
+                        <p className="font-semibold text-white text-sm">{session.user?.name}</p>
+                        <p className="text-xs text-gray-300 capitalize">{session.user?.role}</p>
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <button className="flex-1 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm">
+                      <Link
+                        href="/profile"
+                        className="flex-1 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm text-center"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
                         Profile
-                      </button>
+                      </Link>
                       <button 
                         onClick={handleLogout}
                         className="flex-1 px-3 py-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-300 text-sm"

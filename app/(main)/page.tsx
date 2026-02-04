@@ -1,7 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useSession } from 'next-auth/react'
+import { useSearchParams } from 'next/navigation'
 import { 
   Trophy, 
   Users, 
@@ -15,13 +17,25 @@ import {
   Target,
   Award,
   Gamepad2,
-  Target as BadmintonIcon,
   Goal,
-  User
+  User,
+  CheckCircle,
+  X as CloseIcon
 } from 'lucide-react'
 
 export default function HomePage() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
+  const { data: session } = useSession()
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    if (session) {
+      setSuccessMessage(`Selamat datang kembali, ${session.user?.name}! Anda berhasil login.`)
+      const timer = setTimeout(() => setSuccessMessage(null), 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [session])
 
   const featuredEvents = [
     {
@@ -59,54 +73,26 @@ export default function HomePage() {
     }
   ]
 
-  const features = [
-    {
-      icon: <Trophy className="w-8 h-8" />,
-      title: 'Multiple Competitions',
-      description: 'Kelola berbagai jenis lomba dalam satu platform',
-      gradient: 'from-purple-500 to-pink-500'
-    },
-    {
-      icon: <Users className="w-8 h-8" />,
-      title: 'Team Management',
-      description: 'Buat dan kelola tim dengan sistem invite yang mudah',
-      gradient: 'from-blue-500 to-cyan-500'
-    },
-    {
-      icon: <Calendar className="w-8 h-8" />,
-      title: 'Bracket System',
-      description: 'Generate bracket otomatis dengan sistem eliminasi',
-      gradient: 'from-green-500 to-emerald-500'
-    },
-    {
-      icon: <Shield className="w-8 h-8" />,
-      title: 'Payment Verification',
-      description: 'Sistem verifikasi pembayaran yang aman dan transparan',
-      gradient: 'from-orange-500 to-red-500'
-    },
-    {
-      icon: <TrendingUp className="w-8 h-8" />,
-      title: 'Live Updates',
-      description: 'Update skor dan hasil pertandingan secara real-time',
-      gradient: 'from-yellow-500 to-orange-500'
-    },
-    {
-      icon: <Smartphone className="w-8 h-8" />,
-      title: 'Responsive Design',
-      description: 'Akses dari desktop maupun mobile dengan pengalaman optimal',
-      gradient: 'from-indigo-500 to-purple-500'
-    }
-  ]
-
-  const stats = [
-    { value: '50+', label: 'Event Sukses', icon: <Trophy className="w-5 h-5" /> },
-    { value: '5,000+', label: 'Peserta Aktif', icon: <Users className="w-5 h-5" /> },
-    { value: '200+', label: 'Tim Terdaftar', icon: <Target className="w-5 h-5" /> },
-    { value: '24/7', label: 'Support', icon: <Zap className="w-5 h-5" /> }
-  ]
-
   return (
     <div className="mt-20 min-h-screen bg-gradient-to-br from-gray-900 ">
+      {/* Toast Notification */}
+      {successMessage && (
+        <div className="fixed top-4 left-4 right-4 max-w-md mx-auto z-[999] animate-slide-down">
+          <div className="backdrop-blur-xl bg-green-500/20 border border-green-500/50 rounded-xl p-4 flex items-center justify-between shadow-xl">
+            <div className="flex items-center gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+              <span className="text-sm text-green-200">{successMessage}</span>
+            </div>
+            <button
+              onClick={() => setSuccessMessage(null)}
+              className="text-green-400 hover:text-green-300 transition-colors"
+            >
+              <CloseIcon className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
@@ -128,8 +114,6 @@ export default function HomePage() {
               <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
                 Eventra
               </span>
-              {' '}
-              {/* <span className="text-white">- Kelola Event & Lomba Kampus</span> */}
             </h1>
             
             <p className="text-xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
@@ -138,25 +122,51 @@ export default function HomePage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <Link
-                href="/register"
-                className="group flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]"
-              >
-                <span>Mulai Sekarang</span>
-                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                href="/events"
-                className="group flex items-center justify-center gap-2 px-8 py-4 rounded-xl backdrop-blur-sm bg-white/10 border border-white/20 text-white hover:bg-white/15 transition-all duration-300"
-              >
-                <Calendar className="w-5 h-5" />
-                <span>Lihat Event</span>
-              </Link>
+              {!session ? (
+                <>
+                  <Link
+                    href="/register"
+                    className="group flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]"
+                  >
+                    <span>Mulai Sekarang</span>
+                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <Link
+                    href="/events"
+                    className="group flex items-center justify-center gap-2 px-8 py-4 rounded-xl backdrop-blur-sm bg-white/10 border border-white/20 text-white hover:bg-white/15 transition-all duration-300"
+                  >
+                    <Calendar className="w-5 h-5" />
+                    <span>Lihat Event</span>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/events"
+                    className="group flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]"
+                  >
+                    <span>Jelajahi Event</span>
+                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <Link
+                    href={session.user?.role === 'admin' ? '/admin' : '/my-events'}
+                    className="group flex items-center justify-center gap-2 px-8 py-4 rounded-xl backdrop-blur-sm bg-white/10 border border-white/20 text-white hover:bg-white/15 transition-all duration-300"
+                  >
+                    <User className="w-5 h-5" />
+                    <span>{session.user?.role === 'admin' ? 'Dashboard' : 'My Events'}</span>
+                  </Link>
+                </>
+              )}
             </div>
 
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
-              {stats.map((stat, index) => (
+              {[
+                { value: '50+', label: 'Event Sukses', icon: <Trophy className="w-5 h-5" /> },
+                { value: '5,000+', label: 'Peserta Aktif', icon: <Users className="w-5 h-5" /> },
+                { value: '200+', label: 'Tim Terdaftar', icon: <Target className="w-5 h-5" /> },
+                { value: '24/7', label: 'Support', icon: <Zap className="w-5 h-5" /> }
+              ].map((stat, index) => (
                 <div 
                   key={index} 
                   className="backdrop-blur-sm bg-white/5 border border-white/10 rounded-xl p-4 text-center hover:bg-white/10 transition-all duration-300"
@@ -191,7 +201,44 @@ export default function HomePage() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature, index) => (
+            {[
+              {
+                icon: <Trophy className="w-8 h-8" />,
+                title: 'Multiple Competitions',
+                description: 'Kelola berbagai jenis lomba dalam satu platform',
+                gradient: 'from-purple-500 to-pink-500'
+              },
+              {
+                icon: <Users className="w-8 h-8" />,
+                title: 'Team Management',
+                description: 'Buat dan kelola tim dengan sistem invite yang mudah',
+                gradient: 'from-blue-500 to-cyan-500'
+              },
+              {
+                icon: <Calendar className="w-8 h-8" />,
+                title: 'Bracket System',
+                description: 'Generate bracket otomatis dengan sistem eliminasi',
+                gradient: 'from-green-500 to-emerald-500'
+              },
+              {
+                icon: <Shield className="w-8 h-8" />,
+                title: 'Payment Verification',
+                description: 'Sistem verifikasi pembayaran yang aman dan transparan',
+                gradient: 'from-orange-500 to-red-500'
+              },
+              {
+                icon: <TrendingUp className="w-8 h-8" />,
+                title: 'Live Updates',
+                description: 'Update skor dan hasil pertandingan secara real-time',
+                gradient: 'from-yellow-500 to-orange-500'
+              },
+              {
+                icon: <Smartphone className="w-8 h-8" />,
+                title: 'Responsive Design',
+                description: 'Akses dari desktop maupun mobile dengan pengalaman optimal',
+                gradient: 'from-indigo-500 to-purple-500'
+              }
+            ].map((feature, index) => (
               <div
                 key={index}
                 onMouseEnter={() => setHoveredCard(index)}
@@ -391,9 +438,20 @@ export default function HomePage() {
         .animation-delay-2000 {
           animation-delay: 2s;
         }
-        
-        .animation-delay-4000 {
-          animation-delay: 4s;
+
+        @keyframes slide-down {
+          from {
+            transform: translateY(-20px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+
+        .animate-slide-down {
+          animation: slide-down 0.3s ease-out;
         }
       `}</style>
     </div>

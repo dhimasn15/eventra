@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="id" suppressHydrationWarning>
       <body className="bg-gray-900">
         <Providers>
-          <div className="pt-5">
+          <div>
             {children}
           </div>
         </Providers>

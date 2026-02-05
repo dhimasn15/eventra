@@ -17,8 +17,7 @@ import {
   Users,
   ArrowLeft,
   CheckCircle,
-  AlertCircle,
-  X
+  AlertCircle
 } from 'lucide-react'
 
 const loginSchema = z.object({
@@ -73,7 +72,7 @@ export default function LoginPage() {
       } else if (result?.ok) {
         setSuccessMessage('Login berhasil! Redirecting...')
         setTimeout(() => {
-          router.replace('/')
+          router.replace('/?login=success')
         }, 800)
       }
     } catch (error) {

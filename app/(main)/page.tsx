@@ -30,12 +30,17 @@ export default function HomePage() {
   const searchParams = useSearchParams()
 
   useEffect(() => {
-    if (session) {
-      setSuccessMessage(`Selamat datang kembali, ${session.user?.name}! Anda berhasil login.`)
+    if (session && searchParams.get('login') === 'success') {
+      setSuccessMessage(`Selamat datang kembali, ${session.user?.name}!`)
+      
+      // Clean up URL without refresh
+      const newUrl = window.location.pathname
+      window.history.replaceState({}, '', newUrl)
+
       const timer = setTimeout(() => setSuccessMessage(null), 5000)
       return () => clearTimeout(timer)
     }
-  }, [session])
+  }, [session, searchParams])
 
   const featuredEvents = [
     {
@@ -76,19 +81,28 @@ export default function HomePage() {
   return (
     <div className="mt-20 min-h-screen bg-gradient-to-br from-gray-900 ">
       {/* Toast Notification */}
+      {/* Toast Notification */}
       {successMessage && (
-        <div className="fixed top-4 left-4 right-4 max-w-md mx-auto z-[999] animate-slide-down">
-          <div className="backdrop-blur-xl bg-green-500/20 border border-green-500/50 rounded-xl p-4 flex items-center justify-between shadow-xl">
-            <div className="flex items-center gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-              <span className="text-sm text-green-200">{successMessage}</span>
+        <div className="fixed top-6 right-6 z-[999] animate-slide-left">
+          <div className="relative group overflow-hidden rounded-2xl shadow-2xl">
+            <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-xl border border-green-500/30"></div>
+            <div className="relative p-4 flex items-center gap-4 min-w-[320px]">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-lg">
+                <CheckCircle className="w-5 h-5 text-white" />
+              </div>
+              <div className="flex-1">
+                <h4 className="text-white font-semibold text-sm">Login Berhasil!</h4>
+                <p className="text-green-200 text-xs mt-0.5">{successMessage}</p>
+              </div>
+              <button
+                onClick={() => setSuccessMessage(null)}
+                className="p-1 rounded-lg hover:bg-white/10 text-green-200 hover:text-white transition-colors"
+              >
+                <CloseIcon className="w-4 h-4" />
+              </button>
             </div>
-            <button
-              onClick={() => setSuccessMessage(null)}
-              className="text-green-400 hover:text-green-300 transition-colors"
-            >
-              <CloseIcon className="w-4 h-4" />
-            </button>
+            {/* Progress Bar */}
+            <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-green-500 to-emerald-500 animate-progress"></div>
           </div>
         </div>
       )}

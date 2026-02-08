@@ -1,5 +1,6 @@
 import NextAuth, { type NextAuthConfig, type DefaultSession } from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials" 
+import CredentialsProvider from "next-auth/providers/credentials"
+import GoogleProvider from "next-auth/providers/google"
 import { connectDB } from "@/lib/mongodb"
 import User from "@/models/User"
 import bcrypt from "bcryptjs"
@@ -28,6 +29,10 @@ declare module "next-auth" {
 
 export const authOptions: NextAuthConfig = {
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -72,6 +77,35 @@ export const authOptions: NextAuthConfig = {
     }),
   ],
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === "google") {
+        try {
+          await connectDB()
+          const existingUser = await User.findOne({ email: user.email?.toLowerCase() })
+          
+          if (!existingUser) {
+            // Create new user from Google account
+            const newUser = await User.create({
+              name: user.name,
+              email: user.email?.toLowerCase(),
+              password: await bcrypt.hash(Math.random().toString(36), 10), // Random password for OAuth users
+              role: "participant",
+              provider: "google",
+              image: user.image,
+            })
+            user.id = newUser._id.toString()
+            ;(user as any).role = "participant"
+          } else {
+            user.id = existingUser._id.toString()
+            ;(user as any).role = existingUser.role
+          }
+        } catch (error) {
+          console.error("Google signIn error:", error)
+          return false
+        }
+      }
+      return true
+    },
     async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id

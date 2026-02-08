@@ -84,7 +84,7 @@ export default function LoginPage() {
   }
 
   const handleGoogleLogin = () => {
-    console.log('Google login clicked')
+    signIn('google', { callbackUrl: '/' })
   }
 
   return (

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Providers } from './providers'
-import Navbar from '@/components/ui/Navbar'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -15,7 +14,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" suppressHydrationWarning>
-      <body className="bg-gray-900">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const isDark = theme === 'dark' || (!theme && prefersDark);
+                if (isDark) {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
+      <body className="antialiased">
         <Providers>
           <div>
             {children}
@@ -23,5 +40,5 @@ export default function RootLayout({
         </Providers>
       </body>
     </html>
-  ) 
+  )
 }

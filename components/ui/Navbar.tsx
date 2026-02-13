@@ -354,7 +354,7 @@ const Navbar = () => {
       </nav>
 
       {/* Spacer for fixed navbar */}
-      <div className="h-20"></div>
+      
 
       <style jsx global>{`
         @keyframes slide-up {

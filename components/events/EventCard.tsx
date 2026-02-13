@@ -15,13 +15,13 @@ interface EventCardProps {
 
 const EventCard = ({ event }: EventCardProps) => {
   const statusColors = {
-    open: 'bg-green-100 text-green-800',
-    closed: 'bg-red-100 text-red-800',
-    upcoming: 'bg-yellow-100 text-yellow-800'
+    open: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+    closed: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
+    upcoming: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-transparent dark:border-slate-800 overflow-hidden hover:shadow-xl transition-shadow">
       <div className="p-6">
         <div className="flex justify-between items-start mb-4">
           <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">
@@ -33,24 +33,24 @@ const EventCard = ({ event }: EventCardProps) => {
           </span>
         </div>
 
-        <h3 className="text-xl font-bold text-gray-800 mb-3">
+        <h3 className="text-xl font-bold text-gray-800 dark:text-slate-100 mb-3">
           {event.title}
         </h3>
-        <p className="text-gray-600 mb-6">
+        <p className="text-gray-600 dark:text-slate-400 mb-6">
           {event.description}
         </p>
 
         <div className="space-y-3 mb-6">
-          <div className="flex items-center text-gray-700">
-            <Calendar className="w-5 h-5 mr-3 text-gray-400" />
+          <div className="flex items-center text-gray-700 dark:text-slate-300">
+            <Calendar className="w-5 h-5 mr-3 text-gray-400 dark:text-slate-500" />
             <span>{event.date}</span>
           </div>
-          <div className="flex items-center text-gray-700">
-            <Users className="w-5 h-5 mr-3 text-gray-400" />
+          <div className="flex items-center text-gray-700 dark:text-slate-300">
+            <Users className="w-5 h-5 mr-3 text-gray-400 dark:text-slate-500" />
             <span>{event.participants} Peserta</span>
           </div>
-          <div className="flex items-center text-gray-700">
-            <Trophy className="w-5 h-5 mr-3 text-gray-400" />
+          <div className="flex items-center text-gray-700 dark:text-slate-300">
+            <Trophy className="w-5 h-5 mr-3 text-gray-400 dark:text-slate-500" />
             <span>Single Elimination</span>
           </div>
         </div>

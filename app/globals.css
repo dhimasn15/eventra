@@ -2,13 +2,21 @@
 @import "tailwindcss";
 
 :root {
-  --foreground-rgb: 255, 255, 255;
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --background-start-rgb: 247, 248, 250;
+  --background-end-rgb: 255, 255, 255;
+}
+
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
   --background-start-rgb: 15, 23, 42;
   --background-end-rgb: 30, 41, 59;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: hsl(var(--foreground));
   background: linear-gradient(
       to bottom,
       transparent,
@@ -17,6 +25,7 @@ body {
     rgb(var(--background-start-rgb));
   min-height: 100vh;
   margin: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
   font-family: system-ui, -apple-system, sans-serif;
 }
 

@@ -91,7 +91,7 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-b from-white to-emerald-50 border-t border-emerald-100">
+    <footer className="relative overflow-hidden bg-gradient-to-b from-white to-emerald-50 dark:from-slate-900 dark:to-slate-950 border-t border-emerald-100 dark:border-slate-800">
       {/* Natural Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
@@ -116,7 +116,7 @@ export default function Footer() {
                   <p className="text-sm text-emerald-700 font-medium">Event Management & Competition System</p>
                 </div>
               </div>
-              <p className="text-slate-600 mb-8 max-w-xl leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-xl leading-relaxed">
                 Platform terpadu untuk mengelola pendaftaran acara, kompetisi, dan bracket
                 berbagai lomba kampus di seluruh Indonesia. Bergabung dengan komunitas
                 event organizer dan peserta terbesar di Indonesia.
@@ -130,10 +130,10 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`group relative p-3 rounded-xl bg-white/80 border border-emerald-200 hover:border-emerald-300 transition-all duration-300 ${social.color} shadow-sm`}
+                    className={`group relative p-3 rounded-xl bg-white/80 dark:bg-slate-800/80 border border-emerald-200 dark:border-slate-700 hover:border-emerald-300 dark:hover:border-slate-600 transition-all duration-300 ${social.color} dark:text-emerald-400 shadow-sm`}
                     aria-label={social.label}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                     <div className="relative">
                       {social.icon}
                     </div>
@@ -148,9 +148,9 @@ export default function Footer() {
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
                   <Mail className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-800">Tetap Update</h3>
+                <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">Tetap Update</h3>
               </div>
-              <p className="text-slate-600 mb-6">
+              <p className="text-slate-600 dark:text-slate-400 mb-6">
                 Dapatkan informasi terbaru tentang event, tips, dan promo eksklusif
                 langsung ke email Anda.
               </p>
@@ -164,7 +164,7 @@ export default function Footer() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Email Anda"
-                      className="w-full pl-10 pr-4 py-3 bg-white border border-emerald-200 rounded-xl text-slate-800 placeholder-emerald-400 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+                      className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 border border-emerald-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-slate-200 placeholder-emerald-400 dark:placeholder-emerald-600 focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-1 focus:ring-emerald-500 transition-all"
                       required
                     />
                   </div>
@@ -187,7 +187,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             {/* Quick Links */}
             <div>
-              <h4 className="text-slate-800 font-bold mb-6 text-lg flex items-center gap-2">
+              <h4 className="text-slate-800 dark:text-slate-100 font-bold mb-6 text-lg flex items-center gap-2">
                 <ChevronRight className="w-4 h-4 text-emerald-500" />
                 Tautan Cepat
               </h4>
@@ -196,10 +196,10 @@ export default function Footer() {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-slate-600 hover:text-emerald-600 transition-colors flex items-center gap-3 group"
+                      className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-3 group"
                     >
-                      <div className="p-2 rounded-lg bg-emerald-50 group-hover:bg-emerald-100 border border-emerald-200 transition-all">
-                        <div className="text-emerald-500">
+                      <div className="p-2 rounded-lg bg-emerald-50 dark:bg-slate-800 group-hover:bg-emerald-100 dark:group-hover:bg-slate-700 border border-emerald-200 dark:border-slate-700 transition-all">
+                        <div className="text-emerald-500 dark:text-emerald-400">
                           {link.icon}
                         </div>
                       </div>
@@ -212,13 +212,13 @@ export default function Footer() {
 
             {/* Resources */}
             <div>
-              <h4 className="text-slate-800 font-bold mb-6 text-lg">Resources</h4>
+              <h4 className="text-slate-800 dark:text-slate-100 font-bold mb-6 text-lg">Resources</h4>
               <ul className="space-y-3">
                 {resources.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-slate-600 hover:text-emerald-600 transition-colors text-sm flex items-center gap-2 group hover:translate-x-1 transition-transform"
+                      className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors text-sm flex items-center gap-2 group hover:translate-x-1 transition-transform"
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                       {link.name}
@@ -230,13 +230,13 @@ export default function Footer() {
 
             {/* Company */}
             <div>
-              <h4 className="text-slate-800 font-bold mb-6 text-lg">Perusahaan</h4>
+              <h4 className="text-slate-800 dark:text-slate-100 font-bold mb-6 text-lg">Perusahaan</h4>
               <ul className="space-y-3">
                 {company.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-slate-600 hover:text-emerald-600 transition-colors text-sm flex items-center gap-2 group hover:translate-x-1 transition-transform"
+                      className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors text-sm flex items-center gap-2 group hover:translate-x-1 transition-transform"
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                       {link.name}
@@ -248,22 +248,22 @@ export default function Footer() {
 
             {/* Contact Info */}
             <div>
-              <h4 className="text-slate-800 font-bold mb-6 text-lg">Kontak</h4>
+              <h4 className="text-slate-800 dark:text-slate-100 font-bold mb-6 text-lg">Kontak</h4>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" />
-                  <span className="text-slate-600 text-sm">
+                  <MapPin className="w-5 h-5 text-emerald-500 dark:text-emerald-400 mt-1 flex-shrink-0" />
+                  <span className="text-slate-600 dark:text-slate-400 text-sm">
                     Jl. Teknologi No. 123, Digital District<br />
                     Jakarta Selatan, Indonesia 12345
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 text-emerald-500 flex-shrink-0" />
-                  <span className="text-slate-600 text-sm">hello@eventra.com</span>
+                  <Mail className="w-5 h-5 text-emerald-500 dark:text-emerald-400 flex-shrink-0" />
+                  <span className="text-slate-600 dark:text-slate-400 text-sm">hello@eventra.com</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-emerald-500 flex-shrink-0" />
-                  <span className="text-slate-600 text-sm">+62 812 3456 7890</span>
+                  <Phone className="w-5 h-5 text-emerald-500 dark:text-emerald-400 flex-shrink-0" />
+                  <span className="text-slate-600 dark:text-slate-400 text-sm">+62 812 3456 7890</span>
                 </div>
               </div>
             </div>
@@ -276,7 +276,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             {/* Copyright */}
             <div className="text-center md:text-left">
-              <div className="flex flex-col sm:flex-row items-center gap-2 text-slate-600 text-sm">
+              <div className="flex flex-col sm:flex-row items-center gap-2 text-slate-600 dark:text-slate-400 text-sm">
                 <span>© {currentYear} Eventra. All rights reserved.</span>
                 <span className="hidden sm:inline">•</span>
               </div>
@@ -285,7 +285,7 @@ export default function Footer() {
                   <Link
                     key={link.name}
                     href={link.href}
-                    className="text-xs text-slate-500 hover:text-emerald-600 transition-colors"
+                    className="text-xs text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
                   >
                     {link.name}
                   </Link>

@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useSession, signOut } from 'next-auth/react'
+import { useTheme } from 'next-themes'
 import { 
   Menu, 
   X, 
@@ -23,7 +24,9 @@ import {
   Sparkles,
   Search,
   Plus,
-  Target
+  Target,
+  Sun,
+  Moon
 } from 'lucide-react'
 
 const Navbar = () => {
@@ -31,6 +34,13 @@ const Navbar = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
   const pathname = usePathname()
   const { data: session } = useSession()
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  // Avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const navLinks = [
     { name: 'Home', href: '/', icon: <Home className="w-5 h-5" /> },
@@ -63,8 +73,8 @@ const Navbar = () => {
     const isActive = pathname === href
     return `flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all ${
       isActive    
-        ? 'text-emerald-700 bg-emerald-50 border border-emerald-200 shadow-sm' 
-        : 'text-slate-700 hover:text-emerald-600 hover:bg-emerald-50/50 border border-transparent'
+        ? 'text-emerald-700 bg-emerald-50 border border-emerald-200 shadow-sm dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20' 
+        : 'text-slate-700 hover:text-emerald-600 hover:bg-emerald-50/50 border border-transparent dark:text-slate-400 dark:hover:text-emerald-400 dark:hover:bg-emerald-500/10'
     }`
   }
 
@@ -72,9 +82,9 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
+      <nav className="fixed top-0 left-0 right-0 z-50 px-4 pt-4 transition-colors">
         <div className="container mx-auto">
-          <div className="bg-white border border-emerald-100 rounded-2xl shadow-lg shadow-emerald-500/5">
+          <div className="bg-white dark:bg-slate-900/80 dark:backdrop-blur-xl border border-emerald-100 dark:border-slate-800 rounded-2xl shadow-lg shadow-emerald-500/5 dark:shadow-none">
             <div className="px-6">
               <div className="flex justify-between items-center py-3">
                 {/* Logo */}
@@ -127,21 +137,29 @@ const Navbar = () => {
                     </button>
                   )}
 
-                  {/* Auth/User Section */}
+                  {/* Theme Toggle & Auth/User Section */}
+                  <button
+                    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                    className="p-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-all border border-transparent hover:border-emerald-100 dark:hover:border-slate-700"
+                    aria-label="Toggle theme"
+                  >
+                    {mounted && (theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />)}
+                  </button>
+
                   {session ? (
                     <div className="relative">
                       <button
                         onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                        className="flex items-center gap-3 px-3 py-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 transition-all border border-emerald-200"
+                        className="flex items-center gap-3 px-3 py-2 rounded-lg bg-emerald-50 dark:bg-slate-800 hover:bg-emerald-100 dark:hover:bg-slate-700 transition-all border border-emerald-200 dark:border-slate-700"
                       >
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
                           <User className="w-4 h-4 text-white" />
                         </div>
                         <div className="text-left">
-                          <p className="text-sm font-semibold text-slate-800">{session.user?.name}</p>
-                          <p className="text-xs text-emerald-600 capitalize">{session.user?.role}</p>
+                          <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">{session.user?.name}</p>
+                          <p className="text-xs text-emerald-600 dark:text-emerald-400 capitalize">{session.user?.role}</p>
                         </div>
-                        <ChevronDown className={`w-4 h-4 text-slate-600 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
+                        <ChevronDown className={`w-4 h-4 text-slate-600 dark:text-slate-400 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
                       </button>
 
                       {/* User Dropdown Menu */}
@@ -228,7 +246,7 @@ const Navbar = () => {
             />
             
             {/* Mobile Menu Panel */}
-            <div className="fixed top-4 right-4 w-72 bg-white border border-emerald-200 rounded-2xl z-50 lg:hidden animate-slide-left overflow-y-auto shadow-2xl">
+            <div className="fixed top-4 right-4 w-72 bg-white dark:bg-slate-900 border border-emerald-200 dark:border-slate-800 rounded-2xl z-50 lg:hidden animate-slide-left overflow-y-auto shadow-2xl">
               <div className="p-5">
                 {/* Close Button */}
                 <div className="flex justify-between items-center mb-6">
@@ -241,12 +259,20 @@ const Navbar = () => {
                       <p className="text-xs text-slate-600">Event Management</p>
                     </div>
                   </div>
-                  <button
-                    onClick={() => setIsMenuOpen(false)}
-                    className="p-1.5 rounded-lg hover:bg-emerald-50 text-slate-700"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                      className="p-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors border border-transparent hover:border-emerald-100 dark:hover:border-slate-700"
+                    >
+                      {mounted && (theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />)}
+                    </button>
+                    <button
+                      onClick={() => setIsMenuOpen(false)}
+                      className="p-1.5 rounded-lg hover:bg-emerald-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
 
                 {/* User Info Section */}

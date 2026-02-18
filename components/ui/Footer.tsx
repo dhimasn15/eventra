@@ -18,7 +18,10 @@ import {
   Leaf,
   Download,
   Apple,
-  Play
+  Play,
+  Github,
+  Twitch,
+  Linkedin
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -68,35 +71,47 @@ export default function Footer() {
       icon: <Twitter className="w-5 h-5" />, 
       href: 'https://twitter.com/eventra', 
       label: 'Twitter',
-      color: 'text-emerald-600 hover:text-emerald-700'
+      color: 'hover:text-blue-400'
     },
     { 
       icon: <Instagram className="w-5 h-5" />, 
       href: 'https://instagram.com/eventra', 
       label: 'Instagram',
-      color: 'text-emerald-600 hover:text-emerald-700'
+      color: 'hover:text-pink-400'
     },
     { 
       icon: <Youtube className="w-5 h-5" />, 
       href: 'https://youtube.com/eventra', 
       label: 'YouTube',
-      color: 'text-emerald-600 hover:text-emerald-700'
+      color: 'hover:text-red-400'
     },
     { 
       icon: <MessageCircle className="w-5 h-5" />, 
       href: 'https://discord.gg/eventra', 
       label: 'Discord',
-      color: 'text-emerald-600 hover:text-emerald-700'
+      color: 'hover:text-indigo-400'
+    },
+    { 
+      icon: <Github className="w-5 h-5" />, 
+      href: 'https://github.com/eventra', 
+      label: 'GitHub',
+      color: 'hover:text-gray-300'
+    },
+    { 
+      icon: <Linkedin className="w-5 h-5" />, 
+      href: 'https://linkedin.com/company/eventra', 
+      label: 'LinkedIn',
+      color: 'hover:text-blue-400'
     },
   ]
 
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-b from-white to-emerald-50 dark:from-slate-900 dark:to-slate-950 border-t border-emerald-100 dark:border-slate-800">
-      {/* Natural Background Effects */}
+    <footer className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 border-t border-white/10">
+      {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-teal-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-100 rounded-full mix-blend-multiply filter blur-3xl opacity-5 animate-pulse"></div>
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-5 animate-pulse animation-delay-4000"></div>
       </div>
 
       <div className="relative px-4 pt-16 pb-8">
@@ -106,34 +121,34 @@ export default function Footer() {
             {/* Brand & Description */}
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg shadow-emerald-500/25">
-                  <Leaf className="w-6 h-6 text-white" />
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/25">
+                  <Trophy className="w-8 h-8 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                     Eventra
                   </h2>
-                  <p className="text-sm text-emerald-700 font-medium">Event Management & Competition System</p>
+                  <p className="text-sm text-blue-300 font-medium">Event Management & Competition System</p>
                 </div>
               </div>
-              <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-xl leading-relaxed">
+              <p className="text-gray-300 mb-8 max-w-xl leading-relaxed">
                 Platform terpadu untuk mengelola pendaftaran acara, kompetisi, dan bracket
                 berbagai lomba kampus di seluruh Indonesia. Bergabung dengan komunitas
                 event organizer dan peserta terbesar di Indonesia.
               </p>
               
               {/* Social Links */}
-              <div className="flex items-center gap-4">
+              <div className="flex flex-wrap items-center gap-3">
                 {socialLinks.map((social) => (
                   <a
                     key={social.label}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`group relative p-3 rounded-xl bg-white/80 dark:bg-slate-800/80 border border-emerald-200 dark:border-slate-700 hover:border-emerald-300 dark:hover:border-slate-600 transition-all duration-300 ${social.color} dark:text-emerald-400 shadow-sm`}
+                    className={`group relative p-3 rounded-xl glass-card hover:border-white/30 transition-all duration-300 text-gray-300 ${social.color}`}
                     aria-label={social.label}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                     <div className="relative">
                       {social.icon}
                     </div>
@@ -143,41 +158,41 @@ export default function Footer() {
             </div>
 
             {/* Newsletter Subscription */}
-            <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl p-8 shadow-sm">
+            <div className="glass-card rounded-2xl p-8">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
-                  <Mail className="w-5 h-5 text-white" />
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                  <Mail className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">Tetap Update</h3>
+                <h3 className="text-xl font-bold text-white">Tetap Update</h3>
               </div>
-              <p className="text-slate-600 dark:text-slate-400 mb-6">
+              <p className="text-gray-300 mb-6">
                 Dapatkan informasi terbaru tentang event, tips, dan promo eksklusif
                 langsung ke email Anda.
               </p>
               <form onSubmit={handleSubscribe} className="space-y-4">
                 <div className="relative group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-transparent rounded-xl blur opacity-0 group-focus-within:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-transparent rounded-xl blur opacity-0 group-focus-within:opacity-100 transition-opacity duration-500"></div>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-emerald-500" />
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-blue-400" />
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Email Anda"
-                      className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 border border-emerald-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-slate-200 placeholder-emerald-400 dark:placeholder-emerald-600 focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-1 focus:ring-emerald-500 transition-all"
+                      className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
                       required
                     />
                   </div>
                 </div>
                 <button
                   type="submit"
-                  className="group w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 shadow-lg hover:shadow-xl shadow-emerald-500/25 hover:scale-[1.02]"
+                  className="group w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl glass-button"
                 >
                   <span>Berlangganan</span>
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </form>
-              <p className="text-xs text-slate-500 mt-4">
+              <p className="text-xs text-gray-400 mt-4">
                 Dengan berlangganan, Anda menyetujui Kebijakan Privasi kami.
               </p>
             </div>
@@ -187,8 +202,8 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             {/* Quick Links */}
             <div>
-              <h4 className="text-slate-800 dark:text-slate-100 font-bold mb-6 text-lg flex items-center gap-2">
-                <ChevronRight className="w-4 h-4 text-emerald-500" />
+              <h4 className="text-white font-bold mb-6 text-lg flex items-center gap-2">
+                <ChevronRight className="w-4 h-4 text-blue-400" />
                 Tautan Cepat
               </h4>
               <ul className="space-y-4">
@@ -196,10 +211,10 @@ export default function Footer() {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-3 group"
+                      className="text-gray-300 hover:text-white transition-colors flex items-center gap-3 group"
                     >
-                      <div className="p-2 rounded-lg bg-emerald-50 dark:bg-slate-800 group-hover:bg-emerald-100 dark:group-hover:bg-slate-700 border border-emerald-200 dark:border-slate-700 transition-all">
-                        <div className="text-emerald-500 dark:text-emerald-400">
+                      <div className="p-2 rounded-lg bg-white/5 group-hover:bg-white/10 border border-white/10 transition-all">
+                        <div className="text-blue-400">
                           {link.icon}
                         </div>
                       </div>
@@ -212,15 +227,15 @@ export default function Footer() {
 
             {/* Resources */}
             <div>
-              <h4 className="text-slate-800 dark:text-slate-100 font-bold mb-6 text-lg">Resources</h4>
+              <h4 className="text-white font-bold mb-6 text-lg">Resources</h4>
               <ul className="space-y-3">
                 {resources.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors text-sm flex items-center gap-2 group hover:translate-x-1 transition-transform"
+                      className="text-gray-300 hover:text-white transition-colors text-sm flex items-center gap-2 group hover:translate-x-1 transition-transform"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                       {link.name}
                     </Link>
                   </li>
@@ -230,15 +245,15 @@ export default function Footer() {
 
             {/* Company */}
             <div>
-              <h4 className="text-slate-800 dark:text-slate-100 font-bold mb-6 text-lg">Perusahaan</h4>
+              <h4 className="text-white font-bold mb-6 text-lg">Perusahaan</h4>
               <ul className="space-y-3">
                 {company.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors text-sm flex items-center gap-2 group hover:translate-x-1 transition-transform"
+                      className="text-gray-300 hover:text-white transition-colors text-sm flex items-center gap-2 group hover:translate-x-1 transition-transform"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                       {link.name}
                     </Link>
                   </li>
@@ -248,44 +263,47 @@ export default function Footer() {
 
             {/* Contact Info */}
             <div>
-              <h4 className="text-slate-800 dark:text-slate-100 font-bold mb-6 text-lg">Kontak</h4>
+              <h4 className="text-white font-bold mb-6 text-lg">Kontak</h4>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-emerald-500 dark:text-emerald-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-600 dark:text-slate-400 text-sm">
+                  <MapPin className="w-5 h-5 text-blue-400 mt-1 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
                     Jl. Teknologi No. 123, Digital District<br />
                     Jakarta Selatan, Indonesia 12345
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 text-emerald-500 dark:text-emerald-400 flex-shrink-0" />
-                  <span className="text-slate-600 dark:text-slate-400 text-sm">hello@eventra.com</span>
+                  <Mail className="w-5 h-5 text-blue-400 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">hello@eventra.com</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-emerald-500 dark:text-emerald-400 flex-shrink-0" />
-                  <span className="text-slate-600 dark:text-slate-400 text-sm">+62 812 3456 7890</span>
+                  <Phone className="w-5 h-5 text-blue-400 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">+62 812 3456 7890</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Divider */}
-          <div className="h-px bg-gradient-to-r from-transparent via-emerald-200 to-transparent my-8" />
+          <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent my-8" />
 
           {/* Bottom Bar */}
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             {/* Copyright */}
             <div className="text-center md:text-left">
-              <div className="flex flex-col sm:flex-row items-center gap-2 text-slate-600 dark:text-slate-400 text-sm">
+              <div className="flex flex-col sm:flex-row items-center gap-2 text-gray-400 text-sm">
                 <span>© {currentYear} Eventra. All rights reserved.</span>
                 <span className="hidden sm:inline">•</span>
+                <span className="flex items-center gap-1">
+                  Made with <Heart className="w-4 h-4 text-red-400 fill-current" /> in Indonesia
+                </span>
               </div>
               <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-4">
                 {legal.map((link) => (
                   <Link
                     key={link.name}
                     href={link.href}
-                    className="text-xs text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                    className="text-xs text-gray-400 hover:text-white transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -296,15 +314,15 @@ export default function Footer() {
             {/* App Badges */}
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <div className="text-center sm:text-right">
-                <p className="text-sm text-slate-600 mb-2">Download Aplikasi Mobile</p>
+                <p className="text-sm text-gray-300 mb-2">Download Aplikasi Mobile</p>
                 <div className="flex gap-3">
-                  <button className="group flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 border border-emerald-200 text-emerald-700 hover:bg-white hover:shadow-md transition-all duration-300 shadow-sm">
-                    <Apple className="w-4 h-4" />
-                    <span className="text-sm">App Store</span>
+                  <button className="group flex items-center gap-2 px-4 py-2 rounded-xl glass-card hover:border-white/30 transition-all duration-300">
+                    <Apple className="w-4 h-4 text-white" />
+                    <span className="text-sm text-white">App Store</span>
                   </button>
-                  <button className="group flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 border border-emerald-200 text-emerald-700 hover:bg-white hover:shadow-md transition-all duration-300 shadow-sm">
-                    <Play className="w-4 h-4" />
-                    <span className="text-sm">Google Play</span>
+                  <button className="group flex items-center gap-2 px-4 py-2 rounded-xl glass-card hover:border-white/30 transition-all duration-300">
+                    <Play className="w-4 h-4 text-white" />
+                    <span className="text-sm text-white">Google Play</span>
                   </button>
                 </div>
               </div>
@@ -313,29 +331,35 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Animation styles */}
       <style jsx>{`
-        @keyframes blob {
-          0% {
-            transform: translate(0px, 0px) scale(1);
-          }
-          33% {
-            transform: translate(30px, -50px) scale(1.1);
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-          }
-          100% {
-            transform: translate(0px, 0px) scale(1);
-          }
+        .glass-card {
+          backdrop-filter: blur(12px);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
         }
         
-        .animate-blob {
-          animation: blob 7s infinite;
+        .glass-button {
+          backdrop-filter: blur(12px);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          color: white;
+          transition: all 0.3s ease;
         }
         
+        .glass-button:hover {
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+          border-color: rgba(255, 255, 255, 0.4);
+          transform: translateY(-2px);
+          box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.5);
+        }
+
         .animation-delay-2000 {
           animation-delay: 2s;
+        }
+
+        .animation-delay-4000 {
+          animation-delay: 4s;
         }
       `}</style>
     </footer>

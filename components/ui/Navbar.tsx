@@ -26,7 +26,9 @@ import {
   Plus,
   Target,
   Sun,
-  Moon
+  Moon,
+  Gamepad2,
+  Shield
 } from 'lucide-react'
 
 const Navbar = () => {
@@ -73,8 +75,8 @@ const Navbar = () => {
     const isActive = pathname === href
     return `flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all ${
       isActive    
-        ? 'text-emerald-700 bg-emerald-50 border border-emerald-200 shadow-sm dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20' 
-        : 'text-slate-700 hover:text-emerald-600 hover:bg-emerald-50/50 border border-transparent dark:text-slate-400 dark:hover:text-emerald-400 dark:hover:bg-emerald-500/10'
+        ? 'glass-card-active text-white bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30' 
+        : 'text-gray-300 hover:text-white hover:bg-white/10 border border-transparent'
     }`
   }
 
@@ -84,7 +86,7 @@ const Navbar = () => {
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 px-4 pt-4 transition-colors">
         <div className="container mx-auto">
-          <div className="bg-white dark:bg-slate-900/80 dark:backdrop-blur-xl border border-emerald-100 dark:border-slate-800 rounded-2xl shadow-lg shadow-emerald-500/5 dark:shadow-none">
+          <div className="glass-card rounded-2xl">
             <div className="px-6">
               <div className="flex justify-between items-center py-3">
                 {/* Logo */}
@@ -93,12 +95,12 @@ const Navbar = () => {
                   className="flex items-center gap-3 group"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-md">
-                    <Target className="w-5 h-5 text-white" />
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/25">
+                    <Trophy className="w-5 h-5 text-white" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">Eventra</span>
-                    <span className="text-xs text-slate-600 hidden md:block">Event Management System</span>
+                    <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Eventra</span>
+                    <span className="text-xs text-gray-400 hidden md:block">Event Management System</span>
                   </div>
                 </Link>
 
@@ -121,7 +123,7 @@ const Navbar = () => {
                   {session && isAdmin && (
                     <Link
                       href="/events/create"
-                      className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white transition-all shadow-md hover:shadow-lg text-sm"
+                      className="flex items-center gap-2 px-4 py-2.5 rounded-lg glass-button"
                     >
                       <Plus className="w-4 h-4" />
                       <span>Create Event</span>
@@ -129,9 +131,9 @@ const Navbar = () => {
                   )}
 
                   {session && (
-                    <button className="p-2 rounded-lg text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 transition-all relative">
-                      <Bell className="w-5 h-5" />
-                      <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                    <button className="p-2.5 rounded-lg glass-card hover:border-white/30 transition-all relative">
+                      <Bell className="w-5 h-5 text-gray-300" />
+                      <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center shadow-lg">
                         3
                       </span>
                     </button>
@@ -140,26 +142,26 @@ const Navbar = () => {
                   {/* Theme Toggle & Auth/User Section */}
                   <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="p-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-slate-800 transition-all border border-transparent hover:border-emerald-100 dark:hover:border-slate-700"
+                    className="p-2.5 rounded-lg glass-card hover:border-white/30 transition-all"
                     aria-label="Toggle theme"
                   >
-                    {mounted && (theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />)}
+                    {mounted && (theme === 'dark' ? <Sun className="w-5 h-5 text-gray-300" /> : <Moon className="w-5 h-5 text-gray-300" />)}
                   </button>
 
                   {session ? (
                     <div className="relative">
                       <button
                         onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                        className="flex items-center gap-3 px-3 py-2 rounded-lg bg-emerald-50 dark:bg-slate-800 hover:bg-emerald-100 dark:hover:bg-slate-700 transition-all border border-emerald-200 dark:border-slate-700"
+                        className="flex items-center gap-3 px-3 py-2 rounded-lg glass-card hover:border-white/30 transition-all"
                       >
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
                           <User className="w-4 h-4 text-white" />
                         </div>
                         <div className="text-left">
-                          <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">{session.user?.name}</p>
-                          <p className="text-xs text-emerald-600 dark:text-emerald-400 capitalize">{session.user?.role}</p>
+                          <p className="text-sm font-semibold text-white">{session.user?.name}</p>
+                          <p className="text-xs text-blue-300 capitalize">{session.user?.role}</p>
                         </div>
-                        <ChevronDown className={`w-4 h-4 text-slate-600 dark:text-slate-400 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
+                        <ChevronDown className={`w-4 h-4 text-gray-300 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
                       </button>
 
                       {/* User Dropdown Menu */}
@@ -169,10 +171,10 @@ const Navbar = () => {
                             className="fixed inset-0 z-40" 
                             onClick={() => setIsUserMenuOpen(false)}
                           />
-                          <div className="absolute right-0 mt-2 w-56 bg-white border border-emerald-200 rounded-xl overflow-hidden z-50 animate-slide-up shadow-xl">
-                            <div className="p-3 border-b border-emerald-200">
-                              <p className="text-xs text-slate-600">Signed in as</p>
-                              <p className="text-sm font-semibold text-slate-800">{session.user?.email}</p>
+                          <div className="absolute right-0 mt-2 w-56 glass-card rounded-xl overflow-hidden z-50 animate-slide-up">
+                            <div className="p-3 border-b border-white/10">
+                              <p className="text-xs text-gray-400">Signed in as</p>
+                              <p className="text-sm font-semibold text-white">{session.user?.email}</p>
                             </div>
                             
                             <div className="p-1">
@@ -180,7 +182,7 @@ const Navbar = () => {
                                 <Link
                                   key={item.name}
                                   href={item.href}
-                                  className="flex items-center gap-3 px-3 py-2 rounded hover:bg-emerald-50 transition-colors text-slate-700 hover:text-emerald-600 text-sm"
+                                  className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10 transition-colors text-gray-300 hover:text-white text-sm"
                                   onClick={() => setIsUserMenuOpen(false)}
                                 >
                                   {item.icon}
@@ -189,10 +191,10 @@ const Navbar = () => {
                               ))}
                             </div>
                             
-                            <div className="p-1 border-t border-emerald-200">
+                            <div className="p-1 border-t border-white/10">
                               <button
                                 onClick={handleLogout}
-                                className="flex items-center gap-3 w-full px-3 py-2 rounded hover:bg-red-50 text-red-600 hover:text-red-700 transition-colors text-sm"
+                                className="flex items-center gap-3 w-full px-3 py-2 rounded-lg hover:bg-red-500/20 text-red-300 hover:text-red-200 transition-colors text-sm"
                               >
                                 <LogOut className="w-4 h-4" />
                                 <span>Logout</span>
@@ -206,13 +208,13 @@ const Navbar = () => {
                     <div className="flex items-center gap-2">
                       <Link
                         href="/login"
-                        className="px-4 py-2.5 rounded-lg text-slate-700 hover:bg-emerald-50 transition-all text-sm border border-emerald-200"
+                        className="px-4 py-2.5 rounded-lg glass-card hover:border-white/30 transition-all text-sm text-gray-300 hover:text-white"
                       >
                         Login
                       </Link>
                       <Link
                         href="/register"
-                        className="px-4 py-2.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white transition-all shadow-md hover:shadow-lg text-sm"
+                        className="px-4 py-2.5 rounded-lg glass-button"
                       >
                         Register
                       </Link>
@@ -222,13 +224,13 @@ const Navbar = () => {
 
                 {/* Mobile Menu Button */}
                 <button
-                  className="lg:hidden p-2 rounded-lg text-slate-700 hover:bg-emerald-50 transition-all border border-emerald-200"
+                  className="lg:hidden p-2.5 rounded-lg glass-card hover:border-white/30 transition-all"
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
                   {isMenuOpen ? (
-                    <X className="w-5 h-5" />
+                    <X className="w-5 h-5 text-gray-300" />
                   ) : (
-                    <Menu className="w-5 h-5" />
+                    <Menu className="w-5 h-5 text-gray-300" />
                   )}
                 </button>
               </div>
@@ -241,63 +243,64 @@ const Navbar = () => {
           <>
             {/* Backdrop */}
             <div 
-              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
               onClick={() => setIsMenuOpen(false)}
             />
             
             {/* Mobile Menu Panel */}
-            <div className="fixed top-4 right-4 w-72 bg-white dark:bg-slate-900 border border-emerald-200 dark:border-slate-800 rounded-2xl z-50 lg:hidden animate-slide-left overflow-y-auto shadow-2xl">
-              <div className="p-5">
-                {/* Close Button */}
+            <div className="fixed top-4 right-4 w-72 glass-card rounded-2xl z-50 lg:hidden animate-slide-left overflow-hidden shadow-2xl">
+              <div className="p-5 max-h-[calc(100vh-2rem)] overflow-y-auto">
+                {/* Header */}
                 <div className="flex justify-between items-center mb-6">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-md">
-                      <Target className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg">
+                      <Trophy className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <span className="text-lg font-bold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">Eventra</span>
-                      <p className="text-xs text-slate-600">Event Management</p>
+                      <span className="text-lg font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Eventra</span>
+                      <p className="text-xs text-gray-400">Event Management</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                      className="p-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors border border-transparent hover:border-emerald-100 dark:hover:border-slate-700"
+                      className="p-2 rounded-lg glass-card hover:border-white/30 transition-all"
                     >
-                      {mounted && (theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />)}
+                      {mounted && (theme === 'dark' ? <Sun className="w-4 h-4 text-gray-300" /> : <Moon className="w-4 h-4 text-gray-300" />)}
                     </button>
                     <button
                       onClick={() => setIsMenuOpen(false)}
-                      className="p-1.5 rounded-lg hover:bg-emerald-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300"
+                      className="p-2 rounded-lg glass-card hover:border-white/30 transition-all"
                     >
-                      <X className="w-5 h-5" />
+                      <X className="w-4 h-4 text-gray-300" />
                     </button>
                   </div>
                 </div>
 
                 {/* User Info Section */}
                 {session ? (
-                  <div className="mb-6 p-3 rounded-xl bg-emerald-50 border border-emerald-200">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
-                        <User className="w-5 h-5 text-white" />
+                  <div className="mb-6 p-4 rounded-xl glass-card">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                        <User className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <p className="font-semibold text-slate-800 text-sm">{session.user?.name}</p>
-                        <p className="text-xs text-emerald-600 capitalize">{session.user?.role}</p>
+                        <p className="font-semibold text-white text-sm">{session.user?.name}</p>
+                        <p className="text-xs text-blue-300 capitalize">{session.user?.role}</p>
+                        <p className="text-xs text-gray-400 mt-1">{session.user?.email}</p>
                       </div>
                     </div>
                     <div className="flex gap-2">
                       <Link
                         href="/profile"
-                        className="flex-1 px-3 py-1.5 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-700 text-sm text-center"
+                        className="flex-1 px-3 py-2 rounded-lg glass-card hover:border-white/30 text-white text-sm text-center transition-all"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         Profile
                       </Link>
                       <button 
                         onClick={handleLogout}
-                        className="flex-1 px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 text-sm"
+                        className="flex-1 px-3 py-2 rounded-lg glass-card hover:border-red-500/30 text-red-300 hover:text-red-200 text-sm transition-all"
                       >
                         Logout
                       </button>
@@ -307,7 +310,7 @@ const Navbar = () => {
                   <div className="mb-6 flex flex-col gap-2">
                     <Link
                       href="/login"
-                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-slate-700 hover:bg-emerald-50 transition-all text-sm border border-emerald-200"
+                      className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg glass-card hover:border-white/30 text-gray-300 hover:text-white transition-all text-sm"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <LogIn className="w-4 h-4" />
@@ -315,7 +318,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       href="/register"
-                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white transition-all text-sm"
+                      className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg glass-button"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <UserPlus className="w-4 h-4" />
@@ -326,15 +329,15 @@ const Navbar = () => {
 
                 {/* Navigation Links */}
                 <div className="space-y-1 mb-6">
-                  <p className="text-xs text-slate-600 uppercase tracking-wider mb-3 px-2">Navigation</p>
+                  <p className="text-xs text-gray-400 uppercase tracking-wider mb-3 px-2">Navigation</p>
                   {navLinks.map((link) => (
                     <Link
                       key={link.name}
                       href={link.href}
-                      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-sm ${
+                      className={`flex items-center gap-3 px-3 py-3 rounded-lg transition-all text-sm ${
                         pathname === link.href
-                          ? 'text-emerald-700 bg-emerald-50 border border-emerald-200'
-                          : 'text-slate-700 hover:text-emerald-600 hover:bg-emerald-50'
+                          ? 'glass-card-active text-white bg-gradient-to-r from-blue-500/20 to-cyan-500/20'
+                          : 'text-gray-300 hover:text-white hover:bg-white/10'
                       }`}
                       onClick={() => setIsMenuOpen(false)}
                     >
@@ -347,25 +350,25 @@ const Navbar = () => {
                 {/* Quick Actions */}
                 {session && (
                   <div className="space-y-1">
-                    <p className="text-xs text-slate-600 uppercase tracking-wider mb-3 px-2">Quick Actions</p>
+                    <p className="text-xs text-gray-400 uppercase tracking-wider mb-3 px-2">Quick Actions</p>
                     {isAdmin && (
                       <Link
                         href="/events/create"
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-emerald-50 text-slate-700 hover:text-emerald-600 text-sm"
+                        className="flex items-center gap-3 px-3 py-3 rounded-lg glass-card hover:border-white/30 text-gray-300 hover:text-white text-sm transition-all"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         <Plus className="w-4 h-4" />
                         <span>Create Event</span>
                       </Link>
                     )}
-                    <button className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg hover:bg-emerald-50 text-slate-700 hover:text-emerald-600 text-sm">
+                    <button className="flex items-center gap-3 w-full px-3 py-3 rounded-lg glass-card hover:border-white/30 text-gray-300 hover:text-white text-sm transition-all">
                       <Bell className="w-4 h-4" />
                       <span>Notifications</span>
-                      <span className="ml-auto bg-red-500 text-xs px-1.5 py-0.5 rounded-full text-white">3</span>
+                      <span className="ml-auto bg-gradient-to-r from-red-500 to-pink-500 text-xs px-2 py-0.5 rounded-full text-white">3</span>
                     </button>
                     <Link
                       href="/settings"
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-emerald-50 text-slate-700 hover:text-emerald-600 text-sm"
+                      className="flex items-center gap-3 px-3 py-3 rounded-lg glass-card hover:border-white/30 text-gray-300 hover:text-white text-sm transition-all"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <Settings className="w-4 h-4" />
@@ -380,9 +383,38 @@ const Navbar = () => {
       </nav>
 
       {/* Spacer for fixed navbar */}
-      
+      <div></div>
 
       <style jsx global>{`
+        .glass-card {
+          backdrop-filter: blur(12px);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        .glass-card-active {
+          backdrop-filter: blur(12px);
+          background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.1));
+          border: 1px solid rgba(59, 130, 246, 0.3);
+          box-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.2);
+        }
+        
+        .glass-button {
+          backdrop-filter: blur(12px);
+          background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(6, 182, 212, 0.2));
+          border: 1px solid rgba(59, 130, 246, 0.4);
+          color: white;
+          transition: all 0.3s ease;
+        }
+        
+        .glass-button:hover {
+          background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(6, 182, 212, 0.3));
+          border-color: rgba(59, 130, 246, 0.5);
+          transform: translateY(-2px);
+          box-shadow: 0 12px 40px 0 rgba(59, 130, 246, 0.3);
+        }
+
         @keyframes slide-up {
           from {
             transform: translateY(-10px);

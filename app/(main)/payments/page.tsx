@@ -82,6 +82,15 @@ const stats = {
   rejected: 75000
 }
 
+// Helper function untuk format angka yang konsisten
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'decimal',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(amount)
+}
+
 export default function PaymentsPage() {
   const [selectedStatus, setSelectedStatus] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
@@ -131,12 +140,12 @@ export default function PaymentsPage() {
   }
 
   return (
-    <div className="pt-20 min-h-screen bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900">
+    <div className="pt-20 min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-emerald-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-1/3 left-1/3 w-64 h-64 bg-teal-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+        <div className="absolute top-1/3 left-1/3 w-64 h-64 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-4000"></div>
       </div>
 
       <div className="relative container mx-auto px-4 py-12">
@@ -144,7 +153,7 @@ export default function PaymentsPage() {
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-12">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">
-              Payment <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Management</span>
+              Payment <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Management</span>
             </h1>
             <p className="text-gray-300">
               Kelola dan verifikasi pembayaran dari peserta kompetisi
@@ -167,13 +176,13 @@ export default function PaymentsPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
           <div className="glass-card p-6 rounded-2xl">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl flex items-center justify-center">
-                <CreditCard className="w-6 h-6 text-green-300" />
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-xl flex items-center justify-center">
+                <CreditCard className="w-6 h-6 text-blue-300" />
               </div>
               <div>
                 <p className="text-gray-400 text-sm">Total Transaksi</p>
                 <p className="text-2xl font-bold text-white">
-                  Rp {stats.total.toLocaleString()}
+                  Rp {formatCurrency(stats.total)}
                 </p>
               </div>
             </div>
@@ -187,7 +196,7 @@ export default function PaymentsPage() {
               <div>
                 <p className="text-gray-400 text-sm">Verified</p>
                 <p className="text-2xl font-bold text-white">
-                  Rp {stats.verified.toLocaleString()}
+                  Rp {formatCurrency(stats.verified)}
                 </p>
               </div>
             </div>
@@ -201,7 +210,7 @@ export default function PaymentsPage() {
               <div>
                 <p className="text-gray-400 text-sm">Pending</p>
                 <p className="text-2xl font-bold text-white">
-                  Rp {stats.pending.toLocaleString()}
+                  Rp {formatCurrency(stats.pending)}
                 </p>
               </div>
             </div>
@@ -215,7 +224,7 @@ export default function PaymentsPage() {
               <div>
                 <p className="text-gray-400 text-sm">Rejected</p>
                 <p className="text-2xl font-bold text-white">
-                  Rp {stats.rejected.toLocaleString()}
+                  Rp {formatCurrency(stats.rejected)}
                 </p>
               </div>
             </div>
@@ -235,7 +244,7 @@ export default function PaymentsPage() {
                     placeholder="Cari invoice, tim, atau event..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-full pl-12 pr-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
@@ -248,7 +257,7 @@ export default function PaymentsPage() {
                       onClick={() => setSelectedStatus(status.id)}
                       className={`p-3 rounded-xl transition-all ${
                         selectedStatus === status.id
-                          ? 'bg-gradient-to-r from-green-500/30 to-emerald-500/30'
+                          ? 'bg-gradient-to-r from-blue-500/30 to-cyan-500/30'
                           : 'bg-white/10 hover:bg-white/20'
                       }`}
                       title={status.label}
@@ -291,8 +300,8 @@ export default function PaymentsPage() {
                   >
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-lg flex items-center justify-center">
-                          <CreditCard className="w-5 h-5 text-green-300" />
+                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-lg flex items-center justify-center">
+                          <CreditCard className="w-5 h-5 text-blue-300" />
                         </div>
                         <div>
                           <p className="text-white font-medium">{payment.id}</p>
@@ -308,11 +317,11 @@ export default function PaymentsPage() {
                     </td>
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-2">
-                        <DollarSign className="w-4 h-4 text-green-300" />
+                        <DollarSign className="w-4 h-4 text-blue-300" />
                         <span className={`font-bold ${
                           payment.amount === 0 ? 'text-gray-300' : 'text-white'
                         }`}>
-                          {payment.amount === 0 ? 'Free' : `Rp ${payment.amount.toLocaleString()}`}
+                          {payment.amount === 0 ? 'Free' : `Rp ${formatCurrency(payment.amount)}`}
                         </span>
                       </div>
                     </td>
@@ -391,7 +400,7 @@ export default function PaymentsPage() {
                 <button className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors">
                   Previous
                 </button>
-                <button className="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg hover:opacity-90 transition-opacity">
+                <button className="px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-lg hover:opacity-90 transition-opacity">
                   Next
                 </button>
               </div>
@@ -404,14 +413,14 @@ export default function PaymentsPage() {
           {/* Upload Section */}
           <div className="glass-card p-8 rounded-3xl">
             <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-              <Upload className="w-6 h-6 text-green-300" />
+              <Upload className="w-6 h-6 text-blue-300" />
               Upload Bukti Bayar
             </h3>
             
             <div className="space-y-4">
-              <div className="p-6 border-2 border-dashed border-white/20 rounded-2xl text-center hover:border-green-500/50 transition-colors cursor-pointer">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-full flex items-center justify-center">
-                  <Upload className="w-8 h-8 text-green-300" />
+              <div className="p-6 border-2 border-dashed border-white/20 rounded-2xl text-center hover:border-blue-500/50 transition-colors cursor-pointer">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center">
+                  <Upload className="w-8 h-8 text-blue-300" />
                 </div>
                 <p className="text-white font-medium mb-2">Upload File</p>
                 <p className="text-gray-400 text-sm">
@@ -439,12 +448,12 @@ export default function PaymentsPage() {
           {/* Bank Information */}
           <div className="glass-card p-8 rounded-3xl">
             <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-              <Shield className="w-6 h-6 text-green-300" />
+              <Shield className="w-6 h-6 text-blue-300" />
               Informasi Rekening
             </h3>
             
             <div className="space-y-6">
-              <div className="p-6 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl">
+              <div className="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-2xl">
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-gray-400">Bank</span>
                   <span className="text-white font-bold">BCA</span>
@@ -507,49 +516,49 @@ export default function PaymentsPage() {
       </div>
 
       <style jsx global>{`
-        @keyframes blob {
-          0%, 100% {
-            transform: translate(0, 0) scale(1);
-          }
-          33% {
-            transform: translate(30px, -30px) scale(1.1);
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-          }
-        }
-        
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        
         .glass-card {
-          backdrop-filter: blur(20px);
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+          backdrop-filter: blur(12px);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
         }
         
         .glass-button {
           backdrop-filter: blur(12px);
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
-          border: 1px solid rgba(255, 255, 255, 0.2);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+          border: 1px solid rgba(255, 255, 255, 0.3);
           color: white;
           transition: all 0.3s ease;
         }
         
         .glass-button:hover {
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15));
-          border-color: rgba(255, 255, 255, 0.3);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+          border-color: rgba(255, 255, 255, 0.4);
           transform: translateY(-2px);
-          box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.3);
+          box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.5);
+        }
+
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 0.1;
+          }
+          50% {
+            opacity: 0.15;
+          }
+        }
+        
+        .animate-pulse {
+          animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+
+        .animation-delay-4000 {
+          animation-delay: 4s;
         }
       `}</style>
     </div>
   )
 }
-

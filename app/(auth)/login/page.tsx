@@ -17,7 +17,10 @@ import {
   Users,
   ArrowLeft,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  Trophy,
+  Sparkles,
+  Shield
 } from 'lucide-react'
 
 const loginSchema = z.object({
@@ -88,14 +91,22 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-900 to-purple-900/20">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+      {/* Animated Background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-5 animate-pulse animation-delay-4000"></div>
+      </div>
 
       {/* Toast Notifications */}
       {successMessage && (
         <div className="fixed top-4 left-4 right-4 max-w-md mx-auto z-[999] animate-slide-down">
-          <div className="backdrop-blur-xl bg-green-500/20 border border-green-500/50 rounded-xl p-4 flex items-center gap-3 shadow-xl">
-            <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-            <span className="text-sm text-green-200">{successMessage}</span>
+          <div className="glass-card rounded-xl p-4 flex items-center gap-3 shadow-xl">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
+              <CheckCircle className="w-4 h-4 text-white" />
+            </div>
+            <span className="text-sm text-gray-200">{successMessage}</span>
           </div>
         </div>
       )}
@@ -105,11 +116,19 @@ export default function LoginPage() {
         <div className="flex items-center justify-between">
           <Link
             href="/"
-            className="group flex items-center gap-2 px-4 py-2 rounded-xl backdrop-blur-sm bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-300"
+            className="group flex items-center gap-2 px-4 py-2 rounded-xl glass-card hover:border-white/30 text-gray-300 hover:text-white transition-all duration-300"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             <span className="text-sm">Kembali</span>
           </Link>
+          
+          {/* Logo */}
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+              <Trophy className="w-4 h-4 text-white" />
+            </div>
+            <span className="text-lg font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Eventra</span>
+          </div>
         </div>
       </div>
 
@@ -118,18 +137,21 @@ export default function LoginPage() {
         {/* Glass Form Container */}
         <div className="relative group">
           {/* Gradient Glow */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+          <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
           
           {/* Glass Form */}
-          <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 md:p-8 shadow-2xl">
+          <div className="relative glass-card rounded-2xl p-6 md:p-8">
             {/* Form Header */}
             <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold text-white mb-2">Login ke Eventra</h2>
+              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                <Shield className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-white mb-2">Selamat Datang Kembali</h2>
               <p className="text-gray-400">
                 Masuk untuk mulai berpartisipasi atau mengelola event
               </p>
               {loginError && (
-                <div className="mt-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-200 text-sm flex items-center gap-2">
+                <div className="mt-4 p-3 glass-card border border-red-500/30 rounded-lg text-red-200 text-sm flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 flex-shrink-0" />
                   {loginError}
                 </div>
@@ -139,7 +161,7 @@ export default function LoginPage() {
             {/* Google Login Button */}
             <button
               onClick={handleGoogleLogin}
-              className="w-full mb-6 group flex items-center justify-center gap-3 py-3 rounded-xl backdrop-blur-sm bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 hover:text-white transition-all duration-300"
+              className="w-full mb-6 group flex items-center justify-center gap-3 py-3 rounded-xl glass-card hover:border-white/30 text-gray-300 hover:text-white transition-all duration-300"
               type="button"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -169,8 +191,8 @@ export default function LoginPage() {
                   onClick={() => setSelectedRole('participant')}
                   className={`py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm ${
                     selectedRole === 'participant'
-                      ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/50 text-white'
-                      : 'backdrop-blur-sm bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10 hover:text-white'
+                      ? 'glass-card-active bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30 text-white'
+                      : 'glass-card hover:border-white/30 text-gray-400 hover:text-white'
                   }`}
                 >
                   <User className="w-4 h-4" />
@@ -180,8 +202,8 @@ export default function LoginPage() {
                   onClick={() => setSelectedRole('admin')}
                   className={`py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm ${
                     selectedRole === 'admin'
-                      ? 'bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/50 text-white'
-                      : 'backdrop-blur-sm bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10 hover:text-white'
+                      ? 'glass-card-active bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-white'
+                      : 'glass-card hover:border-white/30 text-gray-400 hover:text-white'
                   }`}
                 >
                   <Users className="w-4 h-4" />
@@ -197,7 +219,7 @@ export default function LoginPage() {
                   Email
                 </label>
                 <div className="relative group/input">
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-transparent rounded-xl blur opacity-0 group-focus-within/input:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur opacity-0 group-focus-within/input:opacity-100 transition-opacity duration-500"></div>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                     <input
@@ -205,13 +227,13 @@ export default function LoginPage() {
                       type="email"
                       autoComplete="username"
                       placeholder="email@example.com"
-                      className="w-full pl-10 pr-4 py-3 text-sm backdrop-blur-sm bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-all"
+                      className="w-full pl-10 pr-4 py-3 text-sm bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 transition-all"
                     />
                   </div>
                 </div>
                 {errors.email && (
                   <p className="mt-2 text-xs text-red-400 flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-red-400"></span>
+                    <span className="w-1 h-1 rounded-full bg-red-400"></span>
                     {errors.email.message}
                   </p>
                 )}
@@ -224,13 +246,13 @@ export default function LoginPage() {
                   </label>
                   <Link
                     href="/forgot-password"
-                    className="text-xs text-purple-400 hover:text-purple-300 transition-colors"
+                    className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
                   >
                     Lupa password?
                   </Link>
                 </div>
                 <div className="relative group/input">
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-transparent rounded-xl blur opacity-0 group-focus-within/input:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur opacity-0 group-focus-within/input:opacity-100 transition-opacity duration-500"></div>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                     <input
@@ -238,7 +260,7 @@ export default function LoginPage() {
                       type={showPassword ? 'text' : 'password'}
                       placeholder="••••••••"
                       autoComplete="current-password"
-                      className="w-full pl-10 pr-12 py-3 text-sm backdrop-blur-sm bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-all"
+                      className="w-full pl-10 pr-12 py-3 text-sm bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 transition-all"
                     />
                     <button
                       type="button"
@@ -255,7 +277,7 @@ export default function LoginPage() {
                 </div>
                 {errors.password && (
                   <p className="mt-2 text-xs text-red-400 flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-red-400"></span>
+                    <span className="w-1 h-1 rounded-full bg-red-400"></span>
                     {errors.password.message}
                   </p>
                 )}
@@ -265,7 +287,7 @@ export default function LoginPage() {
                 <label className="flex items-center cursor-pointer group">
                   <input
                     type="checkbox"
-                    className="w-5 h-5 rounded accent-purple-500 cursor-pointer"
+                    className="w-4 h-4 rounded border-white/20 bg-white/5 checked:bg-blue-500 checked:border-blue-500 focus:ring-blue-500/50 focus:ring-offset-0"
                     defaultChecked
                   />
                   <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-300">Ingat saya</span>
@@ -275,7 +297,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full group flex items-center justify-center gap-3 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold text-sm hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="w-full group flex items-center justify-center gap-3 py-3 rounded-xl glass-button text-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {isLoading ? (
                   <>
@@ -296,7 +318,7 @@ export default function LoginPage() {
               Belum punya akun?{' '}
               <Link
                 href="/register"
-                className="text-purple-400 hover:text-purple-300 font-semibold transition-colors group inline-flex items-center gap-1"
+                className="text-blue-400 hover:text-blue-300 font-semibold transition-colors group inline-flex items-center gap-1"
               >
                 Daftar sekarang
                 <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
@@ -318,8 +340,36 @@ export default function LoginPage() {
         </p>
       </div>
 
-      {/* Animation styles */}
       <style jsx global>{`
+        .glass-card {
+          backdrop-filter: blur(12px);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        .glass-card-active {
+          backdrop-filter: blur(12px);
+          background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.1));
+          border: 1px solid rgba(59, 130, 246, 0.3);
+          box-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.2);
+        }
+        
+        .glass-button {
+          backdrop-filter: blur(12px);
+          background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(6, 182, 212, 0.2));
+          border: 1px solid rgba(59, 130, 246, 0.4);
+          color: white;
+          transition: all 0.3s ease;
+        }
+        
+        .glass-button:hover {
+          background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(6, 182, 212, 0.3));
+          border-color: rgba(59, 130, 246, 0.5);
+          transform: translateY(-2px);
+          box-shadow: 0 12px 40px 0 rgba(59, 130, 246, 0.3);
+        }
+
         @keyframes spin {
           from {
             transform: rotate(0deg);
@@ -346,6 +396,27 @@ export default function LoginPage() {
 
         .animate-slide-down {
           animation: slide-down 0.3s ease-out;
+        }
+
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 0.1;
+          }
+          50% {
+            opacity: 0.15;
+          }
+        }
+        
+        .animate-pulse {
+          animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+
+        .animation-delay-4000 {
+          animation-delay: 4s;
         }
       `}</style>
     </div>

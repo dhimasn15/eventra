@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { Skeleton } from '@/components/ui/skeleton'
 import Link from 'next/link'
 import { 
   Search, 
@@ -113,6 +114,12 @@ export default function EventsPage() {
   const [selectedCategory, setSelectedCategory] = useState('Semua')
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState('terbaru')
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const t = setTimeout(() => setIsLoading(false), 1200)
+    return () => clearTimeout(t)
+  }, [])
 
   const filteredEvents = events.filter(event => {
     const matchesCategory = selectedCategory === 'Semua' || event.category === selectedCategory
@@ -157,6 +164,116 @@ export default function EventsPage() {
       description: 'Pantau perkembangan event secara real-time dengan dashboard'
     }
   ]
+
+  if (isLoading) {
+    return (
+      <div className="pt-20 min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-5" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-5" />
+        </div>
+
+        <div className="relative container mx-auto px-4 py-8">
+          {/* Header Card Skeleton */}
+          <div className="glass-card rounded-3xl p-8 mb-8">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+              <div className="flex flex-col gap-3">
+                <Skeleton className="h-8 w-28 rounded-full bg-white/5" />
+                <Skeleton className="h-12 w-72 bg-white/10" />
+                <Skeleton className="h-5 w-96 bg-white/5" />
+              </div>
+              <Skeleton className="h-12 w-40 rounded-xl bg-white/10" />
+            </div>
+            <div className="flex flex-col md:flex-row gap-4">
+              <Skeleton className="flex-1 h-12 rounded-xl bg-white/10" />
+              <div className="flex gap-2">
+                {[1,2,3,4].map(i => <Skeleton key={i} className="h-12 w-24 rounded-xl bg-white/5" />)}
+              </div>
+            </div>
+          </div>
+
+          {/* Stats Skeleton */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            {[1,2,3,4].map(i => (
+              <div key={i} className="glass-card p-6 rounded-2xl">
+                <div className="flex items-center justify-between">
+                  <Skeleton className="w-12 h-12 rounded-xl bg-white/10" />
+                  <div className="flex flex-col items-end gap-2">
+                    <Skeleton className="h-7 w-16 bg-white/10" />
+                    <Skeleton className="h-4 w-24 bg-white/5" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Features Skeleton */}
+          <div className="mb-12">
+            <div className="flex justify-between items-center mb-6">
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-7 w-64 bg-white/10" />
+                <Skeleton className="h-4 w-48 bg-white/5" />
+              </div>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[1,2,3].map(i => (
+                <div key={i} className="glass-card p-6 rounded-2xl">
+                  <Skeleton className="w-12 h-12 rounded-xl mb-4 bg-white/10" />
+                  <Skeleton className="h-5 w-32 mb-2 bg-white/10" />
+                  <Skeleton className="h-4 w-full bg-white/5" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Events Grid Skeleton */}
+          <div className="mb-12">
+            <div className="flex justify-between items-center mb-6">
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-7 w-36 bg-white/10" />
+                <Skeleton className="h-4 w-28 bg-white/5" />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1,2,3,4,5,6].map(i => (
+                <div key={i} className="glass-card p-6 rounded-3xl">
+                  <div className="w-16 h-16 bg-white/5 rounded-2xl mb-4" />
+                  <Skeleton className="h-4 w-20 rounded-full mb-4 bg-white/5" />
+                  <Skeleton className="h-6 w-3/4 mb-2 bg-white/10" />
+                  <Skeleton className="h-4 w-full mb-4 bg-white/5" />
+                  <div className="space-y-3 mb-4">
+                    <Skeleton className="h-4 w-full bg-white/5" />
+                    <Skeleton className="h-4 w-full bg-white/5" />
+                    <Skeleton className="h-2 w-full rounded-full bg-white/5" />
+                  </div>
+                  <div className="flex gap-3">
+                    <Skeleton className="h-11 flex-1 rounded-xl bg-white/10" />
+                    <Skeleton className="h-11 flex-1 rounded-xl bg-white/5" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA Skeleton */}
+          <div className="glass-card rounded-3xl p-8 flex flex-col items-center gap-4">
+            <Skeleton className="w-20 h-20 rounded-2xl bg-white/10" />
+            <Skeleton className="h-10 w-64 bg-white/10" />
+            <Skeleton className="h-5 w-full max-w-md bg-white/5" />
+            <Skeleton className="h-12 w-48 rounded-xl bg-white/10 mt-4" />
+          </div>
+        </div>
+
+        <style jsx global>{`
+          .glass-card {
+            backdrop-filter: blur(12px);
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.1);
+          }
+        `}</style>
+      </div>
+    )
+  }
 
   return (
     <div className="pt-20 min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">

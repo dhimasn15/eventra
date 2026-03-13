@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { Skeleton } from '@/components/ui/skeleton'
 import Link from 'next/link'
 import { 
   Calendar, 
@@ -25,6 +26,12 @@ export default function CreateEventPage() {
   const router = useRouter()
   const [step, setStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const t = setTimeout(() => setIsLoading(false), 1200)
+    return () => clearTimeout(t)
+  }, [])
 
   const [formData, setFormData] = useState({
     // Step 1
@@ -107,6 +114,84 @@ export default function CreateEventPage() {
     { number: 3, title: 'Biaya & Hadiah', icon: <DollarSign className="w-4 h-4" /> },
     { number: 4, title: 'Detail Lainnya', icon: <AlertCircle className="w-4 h-4" /> }
   ]
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 py-20 px-4">
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-5" />
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-5" />
+        </div>
+
+        <div className="container mx-auto max-w-4xl relative">
+          {/* Breadcrumb skeleton */}
+          <div className="mb-8 flex items-center gap-2">
+            <Skeleton className="h-4 w-16 bg-white/10" />
+            <Skeleton className="h-4 w-4 bg-white/5" />
+            <Skeleton className="h-4 w-16 bg-white/10" />
+            <Skeleton className="h-4 w-4 bg-white/5" />
+            <Skeleton className="h-4 w-20 bg-white/10" />
+          </div>
+
+          {/* Header skeleton */}
+          <div className="glass-card p-8 rounded-3xl mb-8">
+            <div className="flex items-center gap-4 mb-6">
+              <Skeleton className="w-16 h-16 rounded-2xl bg-white/10" />
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-8 w-48 bg-white/10" />
+                <Skeleton className="h-4 w-64 bg-white/5" />
+              </div>
+            </div>
+            {/* Step indicators skeleton */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[1,2,3,4].map(i => (
+                <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
+                  <Skeleton className="w-8 h-8 rounded-lg bg-white/10" />
+                  <div className="flex flex-col gap-1">
+                    <Skeleton className="h-3 w-10 bg-white/5" />
+                    <Skeleton className="h-4 w-24 bg-white/10" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Form skeleton */}
+          <div className="glass-card p-8 rounded-3xl">
+            <div className="space-y-6">
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-4 w-28 bg-white/5" />
+                <Skeleton className="h-12 w-full rounded-xl bg-white/10" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-4 w-20 bg-white/5" />
+                <Skeleton className="h-12 w-full rounded-xl bg-white/10" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-4 w-32 bg-white/5" />
+                <Skeleton className="h-28 w-full rounded-xl bg-white/10" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-4 w-28 bg-white/5" />
+                <Skeleton className="h-40 w-full rounded-2xl bg-white/5" />
+              </div>
+            </div>
+            <div className="flex justify-end pt-8 mt-8 border-t border-white/10">
+              <Skeleton className="h-12 w-28 rounded-xl bg-white/10" />
+            </div>
+          </div>
+        </div>
+
+        <style jsx global>{`
+          .glass-card {
+            backdrop-filter: blur(12px);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+          }
+        `}</style>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 py-20 px-4">

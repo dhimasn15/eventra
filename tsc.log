@@ -1,0 +1,43 @@
+﻿app/(auth)/login/page.tsx(22,3): error TS6133: 'Sparkles' is declared but its value is never read.
+app/(main)/brackets/page.tsx(6,3): error TS6133: 'Users' is declared but its value is never read.
+app/(main)/brackets/page.tsx(10,3): error TS6133: 'Filter' is declared but its value is never read.
+app/(main)/brackets/page.tsx(48,20): error TS6133: 'setBrackets' is declared but its value is never read.
+app/(main)/competitions/page.tsx(7,3): error TS6133: 'Calendar' is declared but its value is never read.
+app/(main)/competitions/page.tsx(17,3): error TS6133: 'Zap' is declared but its value is never read.
+app/(main)/events/create/page.tsx(8,3): error TS6133: 'Users' is declared but its value is never read.
+app/(main)/events/create/page.tsx(20,3): error TS6133: 'Lock' is declared but its value is never read.
+app/(main)/events/page.tsx(20,3): error TS6133: 'DollarSign' is declared but its value is never read.
+app/(main)/events/page.tsx(22,3): error TS6133: 'Filter' is declared but its value is never read.
+app/(main)/events/page.tsx(23,3): error TS6133: 'Clock' is declared but its value is never read.
+app/(main)/page.tsx(16,3): error TS6133: 'Zap' is declared but its value is never read.
+app/(main)/page.tsx(25,3): error TS6133: 'Star' is declared but its value is never read.
+app/(main)/page.tsx(27,3): error TS6133: 'PlayCircle' is declared but its value is never read.
+app/(main)/page.tsx(29,3): error TS6133: 'Music' is declared but its value is never read.
+app/(main)/page.tsx(30,3): error TS6133: 'Cpu' is declared but its value is never read.
+app/(main)/page.tsx(31,3): error TS6133: 'DollarSign' is declared but its value is never read.
+app/(main)/page.tsx(35,10): error TS6133: 'hoveredCard' is declared but its value is never read.
+app/(main)/payments/page.tsx(97,10): error TS6133: 'selectedPayment' is declared but its value is never read.
+app/(main)/profile/page.tsx(19,3): error TS6133: 'Settings' is declared but its value is never read.
+app/(main)/profile/page.tsx(22,3): error TS6133: 'Award' is declared but its value is never read.
+app/api/auth/[...nextauth]/route.ts(85,46): error TS6133: 'fetchError' is declared but its value is never read.
+app/api/auth/[...nextauth]/route.ts(121,30): error TS6133: 'trigger' is declared but its value is never read.
+app/api/auth/[...nextauth]/route.ts(121,39): error TS6133: 'session' is declared but its value is never read.
+app/api/user/profile/route.ts(57,27): error TS6133: 'request' is declared but its value is never read.
+auth.ts(49,30): error TS6133: 'trigger' is declared but its value is never read.
+auth.ts(49,39): error TS6133: 'session' is declared but its value is never read.
+components/ui/Footer.tsx(18,3): error TS6133: 'Leaf' is declared but its value is never read.
+components/ui/Footer.tsx(19,3): error TS6133: 'Download' is declared but its value is never read.
+components/ui/Footer.tsx(23,3): error TS6133: 'Twitch' is declared but its value is never read.
+components/ui/Navbar.tsx(22,3): error TS6133: 'TrendingUp' is declared but its value is never read.
+components/ui/Navbar.tsx(24,3): error TS6133: 'Sparkles' is declared but its value is never read.
+components/ui/Navbar.tsx(25,3): error TS6133: 'Search' is declared but its value is never read.
+components/ui/Navbar.tsx(27,3): error TS6133: 'Target' is declared but its value is never read.
+components/ui/Navbar.tsx(30,3): error TS6133: 'Gamepad2' is declared but its value is never read.
+components/ui/Navbar.tsx(31,3): error TS6133: 'Shield' is declared but its value is never read.
+lib/db.ts(1,22): error TS2307: Cannot find module 'mongoose' or its corresponding type declarations.
+lib/db.ts(39,65): error TS7006: Parameter 'mongoose' implicitly has an 'any' type.
+lib/mongodb.ts(1,22): error TS2307: Cannot find module 'mongoose' or its corresponding type declarations.
+models/User.ts(1,44): error TS2307: Cannot find module 'mongoose' or its corresponding type declarations.
+models/User.ts(43,8): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
+models/User.ts(46,3): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
+models/User.ts(46,37): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.

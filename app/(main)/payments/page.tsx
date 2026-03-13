@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Skeleton } from '@/components/ui/skeleton'
 import { 
   CreditCard, 
   CheckCircle, 
@@ -95,6 +96,12 @@ export default function PaymentsPage() {
   const [selectedStatus, setSelectedStatus] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedPayment, setSelectedPayment] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const t = setTimeout(() => setIsLoading(false), 1200)
+    return () => clearTimeout(t)
+  }, [])
 
   const statusOptions = [
     { id: 'all', label: 'Semua', icon: CreditCard, color: 'text-gray-400' },
@@ -137,6 +144,142 @@ export default function PaymentsPage() {
       default:
         return null
     }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="pt-20 min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-5" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-5" />
+        </div>
+
+        <div className="relative container mx-auto px-4 py-12">
+          {/* Header skeleton */}
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-12">
+            <div className="flex flex-col gap-3">
+              <Skeleton className="h-12 w-80 bg-white/10" />
+              <Skeleton className="h-5 w-72 bg-white/5" />
+            </div>
+            <div className="flex gap-3">
+              <Skeleton className="h-12 w-36 rounded-xl bg-white/10" />
+              <Skeleton className="h-12 w-36 rounded-xl bg-white/10" />
+            </div>
+          </div>
+
+          {/* Stats skeleton */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+            {[1,2,3,4].map(i => (
+              <div key={i} className="glass-card p-6 rounded-2xl">
+                <div className="flex items-center gap-4">
+                  <Skeleton className="w-12 h-12 rounded-xl bg-white/10" />
+                  <div className="flex flex-col gap-2">
+                    <Skeleton className="h-4 w-24 bg-white/5" />
+                    <Skeleton className="h-7 w-32 bg-white/10" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Table skeleton */}
+          <div className="glass-card rounded-3xl overflow-hidden mb-12">
+            {/* Search bar */}
+            <div className="p-6 border-b border-white/10">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <Skeleton className="h-12 w-full max-w-md rounded-xl bg-white/10" />
+                <div className="flex gap-2">
+                  {[1,2,3,4,5,6].map(i => <Skeleton key={i} className="h-12 w-12 rounded-xl bg-white/10" />)}
+                </div>
+              </div>
+            </div>
+            {/* Table rows */}
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    {['Invoice ID','Event','Tim/Peserta','Amount','Date','Status','Actions'].map(h => (
+                      <th key={h} className="text-left py-4 px-6">
+                        <Skeleton className="h-4 w-20 bg-white/5" />
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[1,2,3,4,5,6].map(i => (
+                    <tr key={i} className="border-b border-white/5">
+                      <td className="py-4 px-6">
+                        <div className="flex items-center gap-3">
+                          <Skeleton className="w-10 h-10 rounded-lg bg-white/10" />
+                          <div className="flex flex-col gap-1">
+                            <Skeleton className="h-4 w-28 bg-white/10" />
+                            <Skeleton className="h-3 w-20 bg-white/5" />
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6"><Skeleton className="h-4 w-40 bg-white/10" /></td>
+                      <td className="py-4 px-6"><Skeleton className="h-4 w-28 bg-white/10" /></td>
+                      <td className="py-4 px-6"><Skeleton className="h-4 w-24 bg-white/10" /></td>
+                      <td className="py-4 px-6"><Skeleton className="h-4 w-20 bg-white/5" /></td>
+                      <td className="py-4 px-6"><Skeleton className="h-6 w-20 rounded-full bg-white/10" /></td>
+                      <td className="py-4 px-6"><Skeleton className="h-8 w-20 rounded-lg bg-white/10" /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {/* Footer */}
+            <div className="p-6 border-t border-white/10 flex justify-between items-center">
+              <Skeleton className="h-4 w-48 bg-white/5" />
+              <div className="flex gap-3">
+                <Skeleton className="h-10 w-24 rounded-lg bg-white/10" />
+                <Skeleton className="h-10 w-24 rounded-lg bg-white/10" />
+              </div>
+            </div>
+          </div>
+
+          {/* Upload + Bank skeleton */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            {[1,2].map(i => (
+              <div key={i} className="glass-card p-8 rounded-3xl">
+                <div className="flex items-center gap-3 mb-6">
+                  <Skeleton className="w-6 h-6 bg-white/10" />
+                  <Skeleton className="h-7 w-44 bg-white/10" />
+                </div>
+                <Skeleton className="h-40 w-full rounded-2xl bg-white/5 mb-4" />
+                <div className="space-y-3">
+                  {[1,2,3].map(j => <Skeleton key={j} className="h-5 w-full bg-white/5" />)}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Status legend skeleton */}
+          <div className="glass-card p-6 rounded-3xl">
+            <Skeleton className="h-7 w-44 mb-6 bg-white/10" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[1,2,3].map(i => (
+                <div key={i} className="flex items-center gap-4 p-4 bg-white/5 rounded-2xl">
+                  <Skeleton className="w-8 h-8 rounded-full bg-white/10" />
+                  <div className="flex flex-col gap-1">
+                    <Skeleton className="h-5 w-20 bg-white/10" />
+                    <Skeleton className="h-3 w-36 bg-white/5" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <style jsx global>{`
+          .glass-card {
+            backdrop-filter: blur(12px);
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.1);
+          }
+        `}</style>
+      </div>
+    )
   }
 
   return (

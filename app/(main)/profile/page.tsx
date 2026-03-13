@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { Skeleton } from '@/components/ui/skeleton'
 import { 
   User, 
   Mail, 
@@ -47,14 +48,87 @@ export default function ProfilePage() {
   // Loading state
   if (status === 'loading') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
-        <div className="glass-card rounded-2xl p-8 flex flex-col items-center gap-4">
-          <Loader2 className="w-8 h-8 text-blue-400 animate-spin" />
-          <p className="text-gray-300">Memuat profil...</p>
+      <div className="min-h-screen pt-28 pb-12 px-4 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-5" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-5" />
         </div>
+
+        <div className="container mx-auto max-w-5xl relative z-10">
+          {/* Header skeleton */}
+          <div className="text-center mb-8 flex flex-col items-center gap-3">
+            <Skeleton className="w-16 h-16 rounded-2xl bg-white/10" />
+            <Skeleton className="h-10 w-48 bg-white/10" />
+            <Skeleton className="h-4 w-40 bg-white/5" />
+          </div>
+
+          {/* Profile Card skeleton */}
+          <div className="glass-card rounded-2xl overflow-hidden mb-8">
+            {/* Cover */}
+            <Skeleton className="h-32 w-full rounded-none bg-white/10" />
+            {/* Avatar + info */}
+            <div className="pt-16 pb-6 px-6">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+                <div className="flex flex-col gap-2">
+                  <Skeleton className="h-8 w-48 bg-white/10" />
+                  <Skeleton className="h-4 w-56 bg-white/5" />
+                </div>
+                <Skeleton className="h-10 w-28 rounded-lg bg-white/10" />
+              </div>
+              {/* Stats grid */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                {[1,2,3,4].map(i => (
+                  <div key={i} className="glass-card p-4 rounded-xl flex flex-col items-center gap-2">
+                    <Skeleton className="w-10 h-10 rounded-lg bg-white/10" />
+                    <Skeleton className="h-6 w-12 bg-white/10" />
+                    <Skeleton className="h-3 w-20 bg-white/5" />
+                  </div>
+                ))}
+              </div>
+              {/* Info grid */}
+              <div className="grid md:grid-cols-2 gap-4">
+                {[1,2,3,4].map(i => (
+                  <div key={i} className="glass-card p-4 rounded-xl flex flex-col gap-2">
+                    <Skeleton className="h-3 w-20 bg-white/5" />
+                    <Skeleton className="h-5 w-48 bg-white/10" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Actions skeleton */}
+          <div className="grid md:grid-cols-3 gap-4 mb-8">
+            {[1,2,3].map(i => (
+              <div key={i} className="glass-card p-6 rounded-xl flex flex-col gap-3">
+                <Skeleton className="w-12 h-12 rounded-lg bg-white/10" />
+                <Skeleton className="h-5 w-24 bg-white/10" />
+                <Skeleton className="h-4 w-full bg-white/5" />
+              </div>
+            ))}
+          </div>
+
+          {/* Danger zone skeleton */}
+          <div className="glass-card p-6 rounded-xl border border-red-500/10">
+            <Skeleton className="h-6 w-36 mb-4 bg-white/10" />
+            <div className="flex gap-4">
+              <Skeleton className="h-10 w-28 rounded-lg bg-white/5" />
+              <Skeleton className="h-10 w-48 rounded-lg bg-white/5" />
+            </div>
+          </div>
+        </div>
+
+        <style jsx global>{`
+          .glass-card {
+            backdrop-filter: blur(12px);
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.1);
+          }
+        `}</style>
       </div>
     )
   }
+
 
   // Not authenticated
   if (!session) {

@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Skeleton } from '@/components/ui/skeleton'
 import { 
   Trophy, 
   Users, 
@@ -46,6 +47,12 @@ export default function BracketsPage() {
   const [selectedRound, setSelectedRound] = useState<'round16' | 'quarterfinals' | 'semifinals' | 'final'>('round16')
   const [selectedCompetition, setSelectedCompetition] = useState('Mobile Legends')
   const [brackets, setBrackets] = useState(initialBrackets)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const t = setTimeout(() => setIsLoading(false), 1200)
+    return () => clearTimeout(t)
+  }, [])
 
   const competitions = ['Mobile Legends', 'FIFA', 'Badminton', 'Billiard']
   const rounds = [
@@ -106,6 +113,127 @@ export default function BracketsPage() {
       </div>
     </div>
   )
+
+  if (isLoading) {
+    return (
+      <div className="pt-20 min-h-screen bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900">
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-10 w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10" />
+          <div className="absolute bottom-20 right-10 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10" />
+        </div>
+
+        <div className="relative container mx-auto px-4 py-12">
+          {/* Header skeleton */}
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-12">
+            <div className="flex flex-col gap-3">
+              <Skeleton className="h-12 w-72 bg-white/10" />
+              <Skeleton className="h-5 w-80 bg-white/5" />
+            </div>
+            <div className="flex gap-3">
+              {[1,2,3].map(i => <Skeleton key={i} className="h-12 w-28 rounded-xl bg-white/10" />)}
+            </div>
+          </div>
+
+          {/* Competition selector skeleton */}
+          <div className="glass-card p-6 rounded-3xl mb-12">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-7 w-40 bg-white/10" />
+                <Skeleton className="h-4 w-64 bg-white/5" />
+              </div>
+              <div className="flex gap-3">
+                {[1,2,3,4].map(i => <Skeleton key={i} className="h-12 w-32 rounded-xl bg-white/10" />)}
+              </div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {[1,2,3,4].map(i => (
+                <div key={i} className="text-center flex flex-col items-center gap-2">
+                  <Skeleton className="h-4 w-20 bg-white/5" />
+                  <Skeleton className="h-8 w-24 bg-white/10" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Round navigation skeleton */}
+          <div className="glass-card p-4 rounded-3xl mb-8">
+            <div className="flex justify-between items-center">
+              <Skeleton className="w-12 h-12 rounded-xl bg-white/10" />
+              <div className="flex gap-2">
+                {[1,2,3,4].map(i => <Skeleton key={i} className="h-12 w-32 rounded-xl bg-white/10" />)}
+              </div>
+              <Skeleton className="w-12 h-12 rounded-xl bg-white/10" />
+            </div>
+          </div>
+
+          {/* Bracket matches skeleton */}
+          <div className="mb-16">
+            <div className="flex justify-between items-center mb-8">
+              <Skeleton className="h-8 w-32 bg-white/10" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[1,2,3,4].map(i => (
+                <div key={i} className="glass-card p-4 rounded-2xl">
+                  <Skeleton className="h-8 w-20 rounded-full mb-3 bg-white/5" />
+                  <div className="space-y-3">
+                    <div className="flex justify-between p-3 rounded-xl bg-white/5">
+                      <Skeleton className="h-5 w-24 bg-white/10" />
+                      <Skeleton className="h-5 w-6 bg-white/10" />
+                    </div>
+                    <div className="flex justify-between p-3 rounded-xl bg-white/5">
+                      <Skeleton className="h-5 w-24 bg-white/10" />
+                      <Skeleton className="h-5 w-6 bg-white/10" />
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-white/10 flex justify-between">
+                    <Skeleton className="h-3 w-16 bg-white/5" />
+                    <Skeleton className="h-3 w-16 bg-white/5" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Tournament progress skeleton */}
+          <div className="glass-card p-8 rounded-3xl mb-12">
+            <Skeleton className="h-9 w-56 mx-auto mb-8 bg-white/10" />
+            <div className="flex justify-between">
+              {[1,2,3,4].map(i => (
+                <div key={i} className="flex flex-col items-center gap-3">
+                  <Skeleton className="w-12 h-12 rounded-full bg-white/10" />
+                  <Skeleton className="h-5 w-20 bg-white/10" />
+                  <Skeleton className="h-3 w-14 bg-white/5" />
+                  <Skeleton className="h-6 w-20 rounded-full bg-white/5" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Winner skeleton */}
+          <div className="glass-card p-8 rounded-3xl text-center flex flex-col items-center gap-4">
+            <Skeleton className="w-16 h-16 rounded-full bg-white/10" />
+            <Skeleton className="h-9 w-52 bg-white/10" />
+            <Skeleton className="h-16 w-64 rounded-2xl bg-white/10" />
+            <Skeleton className="h-4 w-full max-w-lg bg-white/5" />
+          </div>
+        </div>
+
+        <style jsx global>{`
+          .glass-card {
+            backdrop-filter: blur(16px);
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.1);
+          }
+          .glass-button {
+            backdrop-filter: blur(12px);
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+          }
+        `}</style>
+      </div>
+    )
+  }
 
   return (
     <div className="pt-20 min-h-screen bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900">

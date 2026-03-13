@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Skeleton } from '@/components/ui/skeleton'
 import { 
   Trophy, 
   Users, 
@@ -94,8 +95,115 @@ const competitions = [
 
 export default function CompetitionsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const t = setTimeout(() => setIsLoading(false), 1200)
+    return () => clearTimeout(t)
+  }, [])
 
   const categories = ['All', 'E-Sports', 'Olahraga', 'Seni', 'Teknologi']
+
+  if (isLoading) {
+    return (
+      <div className="pt-20 min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-5" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-5" />
+        </div>
+
+        <div className="relative container mx-auto px-4 py-12">
+          {/* Header skeleton */}
+          <div className="text-center mb-16 flex flex-col items-center gap-4">
+            <Skeleton className="w-24 h-24 rounded-3xl bg-white/10" />
+            <Skeleton className="h-12 w-80 bg-white/10" />
+            <Skeleton className="h-5 w-full max-w-lg bg-white/5" />
+            <Skeleton className="h-5 w-3/4 max-w-md bg-white/5" />
+          </div>
+
+          {/* Category pills skeleton */}
+          <div className="flex flex-wrap gap-3 justify-center mb-12">
+            {[1,2,3,4,5].map(i => (
+              <Skeleton key={i} className="h-11 w-24 rounded-xl bg-white/10" />
+            ))}
+          </div>
+
+          {/* Stats skeleton */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+            {[1,2,3,4].map(i => (
+              <div key={i} className="glass-card p-6 rounded-2xl flex flex-col items-center gap-2">
+                <Skeleton className="h-4 w-28 bg-white/5" />
+                <Skeleton className="h-8 w-20 bg-white/10" />
+              </div>
+            ))}
+          </div>
+
+          {/* Competitions grid skeleton */}
+          <div className="mb-16">
+            <div className="flex justify-between items-center mb-8">
+              <Skeleton className="h-9 w-56 bg-white/10" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1,2,3,4,5,6].map(i => (
+                <div key={i} className="glass-card p-8 rounded-3xl">
+                  <div className="w-16 h-16 bg-white/5 rounded-2xl mb-6" />
+                  <Skeleton className="h-7 w-3/4 mb-2 bg-white/10" />
+                  <div className="flex gap-2 mb-6">
+                    <Skeleton className="h-6 w-20 rounded-full bg-white/5" />
+                    <Skeleton className="h-6 w-20 rounded-full bg-white/5" />
+                  </div>
+                  <div className="space-y-4 mb-8">
+                    <Skeleton className="h-4 w-full bg-white/5" />
+                    <Skeleton className="h-2 w-full rounded-full bg-white/5" />
+                    <Skeleton className="h-4 w-full bg-white/5" />
+                  </div>
+                  <div className="flex gap-3">
+                    <Skeleton className="h-12 flex-1 rounded-xl bg-white/10" />
+                    <Skeleton className="h-12 flex-1 rounded-xl bg-white/5" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Tournament structure skeleton */}
+          <div className="glass-card p-8 rounded-3xl mb-16">
+            <Skeleton className="h-9 w-56 mx-auto mb-8 bg-white/10" />
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              {[1,2,3,4].map(i => (
+                <div key={i} className="flex flex-col items-center gap-3">
+                  <div className="w-20 h-20 bg-white/5 rounded-2xl" />
+                  <Skeleton className="h-6 w-28 bg-white/10" />
+                  <Skeleton className="h-4 w-20 bg-white/5" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* FAQ skeleton */}
+          <div className="glass-card p-8 rounded-3xl">
+            <Skeleton className="h-9 w-48 mx-auto mb-8 bg-white/10" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[1,2,3,4].map(i => (
+                <div key={i} className="bg-white/5 rounded-2xl p-6 flex flex-col gap-3">
+                  <Skeleton className="h-5 w-3/4 bg-white/10" />
+                  <Skeleton className="h-4 w-full bg-white/5" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <style jsx global>{`
+          .glass-card {
+            backdrop-filter: blur(12px);
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.1);
+          }
+        `}</style>
+      </div>
+    )
+  }
 
   return (
     <div className="pt-20 min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">

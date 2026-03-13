@@ -1,5 +1,5 @@
-import { connectDB } from "@/lib/mongodb"
-import User from "@/models/User"
+import { supabase } from "@/lib/supabase"
+import bcrypt from "bcryptjs"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
@@ -40,10 +40,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    await connectDB()
-
     // Cek email sudah terdaftar
-    const existingUser = await User.findOne({ email: email.toLowerCase() })
+    const { data: existingUser } = await supabase
+      .from('users')
+      .select('email')
+      .eq('email', email.toLowerCase())
+      .single()
+
     if (existingUser) {
       return NextResponse.json(
         { message: "Email sudah terdaftar" },
@@ -52,18 +55,27 @@ export async function POST(request: NextRequest) {
     }
 
     // Buat user baru
-    const user = await User.create({
-      name: name.trim(),
-      email: email.toLowerCase(),
-      password,
-      role,
-    })
+    const hashedPassword = await bcrypt.hash(password, 10)
+    const { data: user, error: insertError } = await supabase
+      .from('users')
+      .insert({
+        name: name.trim(),
+        email: email.toLowerCase(),
+        password: hashedPassword,
+        role,
+      })
+      .select('*')
+      .single()
+
+    if (insertError || !user) {
+      throw insertError || new Error("Failed to create user")
+    }
 
     return NextResponse.json(
       {
         message: "Registrasi berhasil",
         user: {
-          id: user._id.toString(),
+          id: user.id,
           name: user.name,
           email: user.email,
           role: user.role,

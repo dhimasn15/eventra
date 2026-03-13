@@ -1,8 +1,7 @@
 import NextAuth, { type NextAuthConfig, type DefaultSession } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google"
-import { connectDB } from "@/lib/mongodb"
-import User from "@/models/User"
+import { supabase } from "@/lib/supabase"
 import bcrypt from "bcryptjs"
 
 declare module "next-auth" {
@@ -45,18 +44,21 @@ export const authOptions: NextAuthConfig = {
         }
 
         try {
-          await connectDB()
-          const user = await User.findOne({
-            email: credentials.email.toLowerCase(),
-          }).select("+password")
+          const { data, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', (credentials.email as string).toLowerCase())
+            .single()
 
-          if (!user) {
+          const user = data as any
+
+          if (!user || error || !user.password) {
             throw new Error("CredentialsSignin")
           } 
 
           const isPasswordValid = await bcrypt.compare(
-            credentials.password,
-            user.password
+            credentials.password as string,
+            user.password as string
           )
 
           if (!isPasswordValid) {
@@ -64,7 +66,7 @@ export const authOptions: NextAuthConfig = {
           }
 
           return {
-            id: user._id.toString(),
+            id: user.id,
             email: user.email,
             name: user.name,
             role: user.role,
@@ -80,23 +82,33 @@ export const authOptions: NextAuthConfig = {
     async signIn({ user, account }) {
       if (account?.provider === "google") {
         try {
-          await connectDB()
-          const existingUser = await User.findOne({ email: user.email?.toLowerCase() })
+          const { data: existingUser, error: fetchError } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', user.email?.toLowerCase())
+            .single()
           
           if (!existingUser) {
             // Create new user from Google account
-            const newUser = await User.create({
-              name: user.name,
-              email: user.email?.toLowerCase(),
-              password: await bcrypt.hash(Math.random().toString(36), 10), // Random password for OAuth users
-              role: "participant",
-              provider: "google",
-              image: user.image,
-            })
-            user.id = newUser._id.toString()
+            const { data: newUser, error: insertError } = await supabase
+              .from('users')
+              .insert({
+                name: user.name,
+                email: user.email?.toLowerCase(),
+                password: await bcrypt.hash(Math.random().toString(36), 10), // Random password for OAuth users
+                role: "participant",
+                provider: "google",
+                image: user.image,
+              })
+              .select('*')
+              .single()
+
+            if (insertError || !newUser) throw insertError
+
+            user.id = newUser.id
             ;(user as any).role = "participant"
           } else {
-            user.id = existingUser._id.toString()
+            user.id = existingUser.id
             ;(user as any).role = existingUser.role
           }
         } catch (error) {

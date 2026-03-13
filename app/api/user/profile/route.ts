@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import { connectDB } from '@/lib/mongodb'
-import User from '@/models/User'
+import { supabase } from '@/lib/supabase'
 
 export async function PATCH(request: NextRequest) {
   try {
@@ -24,15 +23,14 @@ export async function PATCH(request: NextRequest) {
       )
     }
 
-    await connectDB()
-    
-    const updatedUser = await User.findOneAndUpdate(
-      { email: session.user.email.toLowerCase() },
-      { name: name.trim() },
-      { new: true }
-    )
+    const { data: updatedUser, error } = await supabase
+      .from('users')
+      .update({ name: name.trim() })
+      .eq('email', session.user.email.toLowerCase())
+      .select('*')
+      .single()
 
-    if (!updatedUser) {
+    if (error || !updatedUser) {
       return NextResponse.json(
         { message: 'User tidak ditemukan' },
         { status: 404 }
@@ -42,7 +40,7 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({
       message: 'Profil berhasil diperbarui',
       user: {
-        id: updatedUser._id.toString(),
+        id: updatedUser.id,
         name: updatedUser.name,
         email: updatedUser.email,
         role: updatedUser.role,
@@ -68,13 +66,13 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    await connectDB()
-    
-    const user = await User.findOne({ 
-      email: session.user.email.toLowerCase() 
-    }).select('-password')
+    const { data: user, error } = await supabase
+      .from('users')
+      .select('id, name, email, role, image, provider, created_at')
+      .eq('email', session.user.email.toLowerCase())
+      .single()
 
-    if (!user) {
+    if (error || !user) {
       return NextResponse.json(
         { message: 'User tidak ditemukan' },
         { status: 404 }
@@ -83,13 +81,13 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       user: {
-        id: user._id.toString(),
+        id: user.id,
         name: user.name,
         email: user.email,
         role: user.role,
         image: user.image,
         provider: user.provider,
-        createdAt: user.createdAt,
+        createdAt: user.created_at,
       }
     })
   } catch (error) {

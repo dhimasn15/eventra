@@ -36,7 +36,6 @@ const Navbar = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
   const pathname = usePathname()
   const { data: session } = useSession()
-  const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
   // Avoid hydration mismatch
@@ -138,15 +137,6 @@ const Navbar = () => {
                       </span>
                     </button>
                   )}
-
-                  {/* Theme Toggle & Auth/User Section */}
-                  <button
-                    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="p-2.5 rounded-lg glass-card hover:border-white/30 transition-all"
-                    aria-label="Toggle theme"
-                  >
-                    {mounted && (theme === 'dark' ? <Sun className="w-5 h-5 text-gray-300" /> : <Moon className="w-5 h-5 text-gray-300" />)}
-                  </button>
 
                   {session ? (
                     <div className="relative">
@@ -260,20 +250,6 @@ const Navbar = () => {
                       <span className="text-lg font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Eventra</span>
                       <p className="text-xs text-gray-400">Event Management</p>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                      className="p-2 rounded-lg glass-card hover:border-white/30 transition-all"
-                    >
-                      {mounted && (theme === 'dark' ? <Sun className="w-4 h-4 text-gray-300" /> : <Moon className="w-4 h-4 text-gray-300" />)}
-                    </button>
-                    <button
-                      onClick={() => setIsMenuOpen(false)}
-                      className="p-2 rounded-lg glass-card hover:border-white/30 transition-all"
-                    >
-                      <X className="w-4 h-4 text-gray-300" />
-                    </button>
                   </div>
                 </div>
 
